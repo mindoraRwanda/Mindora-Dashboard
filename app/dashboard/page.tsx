@@ -1,29 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '../Components/Sidebar';
 import TopBar from '../Components/TopBar';
+import Searching from '@/app/Components/SearchingPatient';
 import AppointmentList from '../Components/AppointmentList';
 import VideoCall from '../Components/VideoCall';
 import Reports from '../Components/Reports';
 import TherapistList from '../Components/TherapistList';
 import UserList from '../Components/UserList';
+import PatientsList from '@/app/Components/PatientsList';
+import PatientMessages from '../Components/PatientMessages';
 
-const UserRole = {
+type UserRoleType = 'therapist' | 'admin';
+
+interface UserRoleEnum {
+  THERAPIST: UserRoleType;
+  ADMIN: UserRoleType;
+}
+
+const UserRole: UserRoleEnum = {
   THERAPIST: 'therapist',
   ADMIN: 'admin'
 };
 
-export default function DashboardPage() {
-  const [userRole, setUserRole] = useState(UserRole.THERAPIST);
-  const [activeComponent, setActiveComponent] = useState('appointments');
+const DashboardPage: React.FC = () => {
+  const [userRole, setUserRole] = useState<UserRoleType>(UserRole.THERAPIST);
+  const [activeComponent, setActiveComponent] = useState<string>('appointments');
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   const renderComponent = () => {
-    switch(activeComponent) {
+    switch (activeComponent) {
+      case 'Searching':
+        return <Searching />;
       case 'appointments':
         return <AppointmentList />;
       case 'videoCall':
         return <VideoCall />;
+      case 'Patients':
+        return <PatientsList />;
+      case 'Messages':
+        return <PatientMessages />;
       case 'reports':
         return <Reports />;
       case 'therapists':
@@ -36,7 +61,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
+    <div className={`flex h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 ${darkMode ? 'dark' : ''}`}>
       <Sidebar 
         userRole={userRole} 
         setActiveComponent={setActiveComponent} 
@@ -44,10 +69,20 @@ export default function DashboardPage() {
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar userRole={userRole} />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-br from-purple-100 to-pink-100 p-6">
+        <div className="flex justify-end p-4">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="px-4 py-2 bg-gray-800 text-white rounded shadow hover:bg-gray-700 transition duration-300"
+          >
+            Toggle {darkMode ? 'Light' : 'Dark'} Mode
+          </button>
+        </div>
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-br from-purple-100 to-pink-100 p-6 dark:bg-gray-900 dark:text-white">
           {renderComponent()}
         </main>
       </div>
     </div>
   );
-}
+};
+
+export default DashboardPage;

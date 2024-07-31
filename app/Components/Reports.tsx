@@ -1,16 +1,27 @@
 import { useState } from 'react';
 import { FaFileAlt, FaDownload, FaChartBar } from 'react-icons/fa';
 
-export default function Reports() {
-  const [selectedReport, setSelectedReport] = useState(null);
+// Define the Report interface
+interface Report {
+  id: number;
+  title: string;
+  date: string;
+  type: 'progress' | 'summary' | 'analysis';
+}
 
-  const reports = [
+export default function Reports() {
+  // State to manage the selected report
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+
+  // Sample data for reports
+  const reports: Report[] = [
     { id: 1, title: "Monthly Patient Progress", date: "2024-07-01", type: "progress" },
     { id: 2, title: "Therapy Session Summary", date: "2024-07-15", type: "summary" },
     { id: 3, title: "Treatment Effectiveness Analysis", date: "2024-07-30", type: "analysis" },
   ];
 
-  const renderReportDetails = (report) => {
+  // Function to render the details of a selected report
+  const renderReportDetails = (report: Report) => {
     switch (report.type) {
       case 'progress':
         return (

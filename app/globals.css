@@ -31,3 +31,12 @@ body {
     text-wrap: balance;
   }
 }
+/* styles.css */
+
+
+.dark body {
+  background-color: #1a202c; /* Tailwind's dark mode background color */
+  color: #cbd5e0; /* Tailwind's dark mode text color */
+}
+
+/* Or if using Tailwind, you can use utility classes */
