@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Sidebar from "../Components/Sidebar";
 import TopBar from "../Components/TopBar";
+import Home from '../Components/Home';
 import AppointmentList from "../Components/AppointmentList";
 import VideoCall from "../Components/VideoCall";
 import Reports from "../Components/Admin/Reports";
@@ -30,11 +31,11 @@ const UserRole = {
 
 export default function DashboardPage() {
   const [userRole, setUserRole] = useState(UserRole.THERAPIST);
-  const [activeComponent, setActiveComponent] = useState("appointments");
+  const [activeComponent, setActiveComponent] = useState("home");
 
   const renderComponent = () => {
-    switch (activeComponent) {
-      case "appointments":
+    switch(activeComponent) {
+      case 'appointments':
         return <AppointmentList />;
       case "videoCall":
         return <VideoCall />;
@@ -73,7 +74,7 @@ export default function DashboardPage() {
         case 'settings':
           return <Settings/>
       default:
-        return <AppointmentList />;
+        return <Home userRole={userRole} />;
     }
   };
 
