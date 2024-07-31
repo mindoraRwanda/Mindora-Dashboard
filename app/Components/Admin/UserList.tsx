@@ -7,7 +7,7 @@ export default function UserList() {
 
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
-      <h2 className="text-2xl font-semibold mb-4">Users</h2>
+      <h2 className="text-2xl font-semibold mb-4  text-purple-600">Users</h2>
       <table className="min-w-full">
         <thead>
           <tr>
