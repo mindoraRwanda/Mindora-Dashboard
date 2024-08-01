@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import Sidebar from "../Components/Sidebar";
 import TopBar from "../Components/TopBar";
-import Searching from '@/app/Components/SearchingPatient';
+import Home from "../Components/Home";
 import AppointmentList from "../Components/AppointmentList";
 import VideoCall from "../Components/VideoCall";
-import Reports from "../Components/Reports";
+import Reports from '../Components/Reports';
 import TherapistList from "../Components/TherapistList";
 import UserList from "../Components/Admin/UserList";
 import Roles from "../Components/Admin/Roles";
@@ -23,7 +23,7 @@ import DataBackup from "../Components/Admin/Data_Backup";
 import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
 import Settings from "../Components/Admin/Settings";
-import PatientsList from '@/app/Components/PatientsList';
+import PatientsList from '../Components/PatientsList';
 import PatientMessages from '../Components/PatientMessages';
 
 const UserRole = {
@@ -33,11 +33,10 @@ const UserRole = {
 
 export default function DashboardPage() {
   const [userRole, setUserRole] = useState(UserRole.THERAPIST);
-  const [activeComponent, setActiveComponent] = useState("appointments");
+  const [activeComponent, setActiveComponent] = useState("home");
+
   const renderComponent = () => {
-    switch (activeComponent) {
-      case 'Searching':
-        return <Searching />;
+    switch(activeComponent) {
       case 'appointments':
         return <AppointmentList />;
       case "videoCall":
@@ -81,7 +80,7 @@ export default function DashboardPage() {
         case 'settings':
           return <Settings/>
       default:
-        return <AppointmentList />;
+        return <Home userRole={userRole} />;
     }
   };
 
