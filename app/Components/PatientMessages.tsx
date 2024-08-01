@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { FaFileAlt, FaDownload, FaChartBar } from 'react-icons/fa';
+import { FaMessage } from 'react-icons/fa6';
 
-export default function Reports() {
+export default function Messages() {
   const [selectedReport, setSelectedReport] = useState(null);
 
-  const reports = [
-    { id: 1, title: "Monthly Patient Progress", date: "2024-07-01", type: "progress" },
-    { id: 2, title: "Therapy Session Summary", date: "2024-07-15", type: "summary" },
-    { id: 3, title: "Treatment Effectiveness Analysis", date: "2024-07-30", type: "analysis" },
+  const messages = [
+    { id: 1, title: "John Doe", date: "2024-07-01", type: "progress" },
+    { id: 2, title: "Bob Johnson", date: "2024-07-15", type: "summary" },
+    { id: 3, title: "Jane Smith", date: "2024-07-30", type: "analysis" },
   ];
 
-  const renderReportDetails = (report) => {
-    switch (report.type) {
+  const renderReportDetails = (messages) => {
+    switch (messages.type) {
       case 'progress':
         return (
           <div className="mt-4 p-4 bg-blue-100 rounded-lg">
@@ -57,24 +58,24 @@ export default function Reports() {
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <ul className="divide-y divide-gray-200">
-            {reports.map((report) => (
-              <li key={report.id} className="py-4">
+            {messages.map((messages) => (
+              <li key={messages.id} className="py-4">
                 <div className="flex items-center space-x-4">
                   <div className="flex-shrink-0">
-                    <FaFileAlt className="h-6 w-6 text-gray-400" />
+                    <FaMessage className="h-6 w-6 text-gray-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">
-                      {report.title}
+                      {messages.title}
                     </p>
-                    <p className="text-sm text-gray-500">{report.date}</p>
+                    <p className="text-sm text-gray-500">{messages.date}</p>
                   </div>
                   <div>
                     <button
-                      onClick={() => setSelectedReport(report)}
+                      onClick={() => setSelectedReport(messages)}
                       className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
                     >
-                      View
+                      Read
                     </button>
                   </div>
                 </div>
@@ -87,10 +88,7 @@ export default function Reports() {
             <div className="bg-gray-100 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">{selectedReport.title}</h3>
               {renderReportDetails(selectedReport)}
-              <button className="mt-4 flex items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                <FaDownload className="mr-2" />
-                Download Report
-              </button>
+             
             </div>
           )}
         </div>

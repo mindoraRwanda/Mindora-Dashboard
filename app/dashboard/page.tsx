@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import Sidebar from "../Components/Sidebar";
 import TopBar from "../Components/TopBar";
-import Home from '../Components/Home';
+import Home from "../Components/Home";
 import AppointmentList from "../Components/AppointmentList";
 import VideoCall from "../Components/VideoCall";
-import Reports from "../Components/Admin/Reports";
+import Reports from '../Components/Reports';
 import TherapistList from "../Components/TherapistList";
 import UserList from "../Components/Admin/UserList";
 import Roles from "../Components/Admin/Roles";
@@ -23,6 +23,8 @@ import DataBackup from "../Components/Admin/Data_Backup";
 import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
 import Settings from "../Components/Admin/Settings";
+import PatientsList from '../Components/PatientsList';
+import PatientMessages from '../Components/PatientMessages';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -38,8 +40,12 @@ export default function DashboardPage() {
       case 'appointments':
         return <AppointmentList />;
       case "videoCall":
-        return <VideoCall />;
-      case "reports":
+        return <VideoCall />
+      case 'Patients':
+        return <PatientsList />;
+      case 'Messages':
+        return <PatientMessages />;
+      case 'reports':
         return <Reports />;
       case "therapists":
         return <TherapistList />;
@@ -79,18 +85,21 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
-      <Sidebar
-        userRole={userRole}
-        setActiveComponent={setActiveComponent}
+    <div className="flex h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 ">
+      <Sidebar 
+        userRole={userRole} 
+        setActiveComponent={setActiveComponent} 
         setUserRole={setUserRole}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar userRole={userRole} />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-br from-purple-100 to-pink-100 p-6">
+       
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-br from-purple-100 to-pink-100 p-6 dark:bg-gray-900 dark:text-white">
           {renderComponent()}
         </main>
       </div>
     </div>
   );
-}
+};
+
+    
