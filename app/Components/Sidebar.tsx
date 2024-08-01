@@ -8,6 +8,8 @@ import {
   FaCog,
   FaCriticalRole,
   FaRegUser,
+  FaList, 
+  FaSearch
 } from "react-icons/fa";
 import { GoChevronDown } from "react-icons/go";
 import { IoCaretDownSharp, IoPeople } from "react-icons/io5";
@@ -16,6 +18,8 @@ import { MdOutlineDataset, MdOutlineDocumentScanner } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { PiCallBellBold } from "react-icons/pi";
 import { SiArkecosystem, SiFiles, SiDatabricks } from "react-icons/si";
+import { FiSettings } from 'react-icons/fi';
+import { FaMessage } from 'react-icons/fa6';
 export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
   const [openDropdown, setOpenDropdown] = useState(null);
 
@@ -39,11 +43,11 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
       <nav className="mt-8">
         {userRole === "therapist" ? (
           <>
-            <a
-              onClick={() => setActiveComponent("appointments")}
-              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-            >
-              <FaCalendarAlt className="mr-3"/> View Appointments
+            <a onClick={() => setActiveComponent('Searching')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <FaSearch className="mr-3" /> Searching
+            </a>
+            <a onClick={() => setActiveComponent('appointments')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <FaCalendarAlt className="mr-3" /> View Appointments
             </a>
             <a
               onClick={() => setActiveComponent("videoCall")}
@@ -51,11 +55,17 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
             >
               <FaVideo className="mr-3" /> Make Video Call
             </a>
-            <a
-              onClick={() => setActiveComponent("reports")}
-              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-            >
+            <a onClick={() => setActiveComponent('Patients')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <FaList className="mr-3" /> Patients List
+            </a>
+            <a onClick={() => setActiveComponent('Messages')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <FaMessage className="mr-3" /> Patients Messages
+            </a>
+            <a onClick={() => setActiveComponent('reports')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <FaChartBar className="mr-3" /> View Reports
+            </a>
+            <a onClick={() => setActiveComponent('Settings')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <FiSettings className="mr-3" /> Setting
             </a>
           </>
         ) : (
