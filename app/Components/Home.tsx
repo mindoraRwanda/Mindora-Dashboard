@@ -43,6 +43,7 @@ const Home = ({ userRole }) => {
           </>
         ) : (
           <>
+          {/* <div className='grid grid-cols-3 gap-4 borde-2 border-gray-200'> */}
             <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
               <div className="flex items-center">
                 <div className="p-3 rounded-full bg-orange-600 bg-opacity-75 text-white">
@@ -65,6 +66,18 @@ const Home = ({ userRole }) => {
                 </div>
               </div>
             </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-blue-600 bg-opacity-75 text-white">
+                  <FaUsers size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">150</h4>
+                  <div className="text-gray-500">Total Users</div>
+                </div>
+              </div>
+            </div>
+            {/* </div> */}
           </>
         )}
       </div>

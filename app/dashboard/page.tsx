@@ -25,6 +25,8 @@ import Legal from "../Components/Admin/Legal";
 import Settings from "../Components/Admin/Settings";
 import PatientsList from '../Components/PatientsList';
 import PatientMessages from '../Components/PatientMessages';
+import Create_Therapy from '../Components/Admin/Create_Therapy';
+import Create_User from '../Components/Admin/Create_User';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -47,10 +49,15 @@ export default function DashboardPage() {
         return <PatientMessages />;
       case 'reports':
         return <Reports />;
+
       case "therapists":
-        return <TherapistList />;
+        return <TherapistList setActiveComponent={setActiveComponent} />;
+
       case "users":
-        return <UserList />;
+        return <UserList setActiveComp={setActiveComponent} />;
+        
+      case "Create_User":
+        return <Create_User/>
       case "roles":
         return <Roles />;
       case "feedback":
@@ -79,6 +86,10 @@ export default function DashboardPage() {
           return <Legal/>
         case 'settings':
           return <Settings/>
+
+        case 'Create_Therapy':
+        return <Create_Therapy/> 
+
       default:
         return <Home userRole={userRole} />;
     }
@@ -99,6 +110,7 @@ export default function DashboardPage() {
         </main>
       </div>
     </div>
+   
   );
 };
 

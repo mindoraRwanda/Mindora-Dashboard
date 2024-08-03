@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { BiShow,BiEditAlt  } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
+import { message } from "antd";
 
-export default function UserList() {
+export default function UserList({setActiveComp}) {
   const users = [
     {
       id: 1,
@@ -38,7 +41,9 @@ export default function UserList() {
     );
     setFilteredUsers(filtered);
   };
-
+  const handleView=()=>{
+    message.info('This is not done yet');
+  };
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
       <div className="flex justify-between mb-4">
@@ -57,6 +62,11 @@ export default function UserList() {
           </button>
         </div>
       </div>
+      <div className="flex float-right border-2 border-slate-300 rounded mt-4">
+
+<a onClick={()=>setActiveComp('Create_User')}  className=" text-purple-600 font-bold p-2 px-2 cursor-pointer"> + Add New</a>
+
+  </div>
       <table className="min-w-full">
         <thead>
           <tr>
@@ -68,6 +78,9 @@ export default function UserList() {
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Last Login
+            </th>
+            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Actions
             </th>
           </tr>
         </thead>
@@ -87,6 +100,14 @@ export default function UserList() {
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 text-gray-900">
                   {user.lastLogin}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="flex text-sm leading-5 text-gray-900">
+                  <button className="flex mr-2 bg-transparent rounded border-2 border-slate-300 font-semibold  p-1 text-black" onClick={handleView}><BiShow size={20}/>Show</button>
+                  <button className="flex mr-2 text-blue-700 border-2 border-slate-300 p-1 rounded font-semibold" onClick={handleView}><BiEditAlt size={20}/>Edit</button>
+                  <button className="flex mr-2 text-red-500 rounded  p-1 border-2 border-slate-300  font-semibold" onClick={handleView}><MdDelete size={20}/>Delete</button>
+
                 </div>
               </td>
             </tr>

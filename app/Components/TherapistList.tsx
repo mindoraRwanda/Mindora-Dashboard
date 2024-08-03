@@ -1,6 +1,13 @@
 import { FiSearch } from "react-icons/fi";
+import { BiShow,BiEditAlt  } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
 import { useState } from "react";
-export default function TherapistList() {
+import { message } from "antd";
+import Link from "next/link";
+import Create_Therapy from '../Components/Admin/Create_Therapy';
+
+
+export default function TherapistList({setActiveComponent}) {
   const therapists = [
     { id: 1, name: "Dr. Alice Johnson", specialty: "Cognitive Behavioral Therapy", patients: 25 },
     { id: 2, name: "Dr. Bob Smith", specialty: "Family Therapy", patients: 30 },
@@ -20,6 +27,11 @@ export default function TherapistList() {
         therapist.specialty.toLowerCase().includes(query)
     );
     setFilteredtherapists(filtered);
+
+  
+  };
+  const handleView=()=>{
+    message.info('This is not done yet');
   };
 
   return (
@@ -40,6 +52,12 @@ export default function TherapistList() {
           </button>
         </div>
       </div>
+      
+      <div className="flex float-right border-2 border-slate-300 rounded mt-4">
+
+      <a onClick={()=>setActiveComponent('Create_Therapy')}  className="  text-purple-600 font-bold p-2 px-2 cursor-pointer"> + Add New</a>
+
+        </div>
       <table className="min-w-full">
         <thead>
           <tr>
@@ -51,6 +69,9 @@ export default function TherapistList() {
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Patients
+            </th>
+            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Actions
             </th>
           </tr>
         </thead>
@@ -65,6 +86,14 @@ export default function TherapistList() {
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 text-gray-900">{therapist.patients}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="flex text-sm leading-5 text-gray-900">
+                  <button className="flex mr-2 bg-transparent p-2 border-2 rounded-md font-semibold border-slate-300 text-black" onClick={handleView}><BiShow size={20}/>Show</button>
+                  <button className="flex mr-2 text-blue-700 p-1 bg-transparent border-2 font-semibold border-slate-300 rounded-md" onClick={handleView}><BiEditAlt size={20}/>Edit</button>
+                  <button className="flex mr-2 text-red-500  p-1 bg-transparent border-2 border-slate-300 rounded-md font-semibold" onClick={handleView}><MdDelete size={20}/>Delete</button>
+
+                </div>
               </td>
             </tr>
           ))}
