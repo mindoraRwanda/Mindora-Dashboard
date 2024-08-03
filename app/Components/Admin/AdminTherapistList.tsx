@@ -4,10 +4,10 @@ import { MdDelete } from "react-icons/md";
 import { useState } from "react";
 import { message, Modal } from "antd";
 import Link from "next/link";
-import Create_Therapy from '../Components/Admin/Create_Therapy';
+import Create_Therapy from './Create_Therapy';
 
 
-export default function TherapistList({setActiveComponent}) {
+export default function AdminTherapistList({setActiveComponent}) {
   const initaltherapists = [
     { id: 1, name: "Dr. Alice Johnson", specialty: "Cognitive Behavioral Therapy", patients: 25 },
     { id: 2, name: "Dr. Bob Smith", specialty: "Family Therapy", patients: 30 },
@@ -75,6 +75,18 @@ export default function TherapistList({setActiveComponent}) {
 
   };
 
+  const handleBlock=()=>{
+    message.info('You will block Therapist');
+  };
+
+  const Add_Therapy=(newTherapy)=>{
+    newTherapy.id=Therapy.length+1;
+    setTherapy([...Therapy,newTherapy]);
+    setFilteredtherapists([...Therapy,newTherapy]);
+    setShowModal(false);
+    message.success("New Thearapist added Successfully");
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
        <div className="flex justify-between mb-4">
@@ -94,9 +106,9 @@ export default function TherapistList({setActiveComponent}) {
         </div>
       </div>
       
-      <div className="flex float-right border-2 border-slate-300 rounded mt-4">
+      <div className="flex float-right border-2 border-slate-300 rounded-md mt-4">
 
-      <a onClick={showModal}className="text-purple-600 font-bold p-2 px-2 cursor-pointer"> + Add New</a>
+      <a onClick={showModal} className="text-white font-bold p-2 px-2 cursor-pointer bg-purple-600 rounded-md "> + Add New</a>
 
         </div>
       <table className="min-w-full">
@@ -110,6 +122,10 @@ export default function TherapistList({setActiveComponent}) {
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Patients
+            </th>
+         
+            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+            Status
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Actions
@@ -129,13 +145,18 @@ export default function TherapistList({setActiveComponent}) {
                 <div className="text-sm leading-5 text-gray-900">{therapist.patients}</div>
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="text-sm leading-5 text-gray-900 ">
+                  <button className="border-2 border-gray-300 rounded-md p-2 px-6 font-semibold" onClick={handleBlock}>Active</button></div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="flex text-sm leading-5 text-gray-900">
-                  <button className="flex mr-2 bg-transparent p-2 border-2 rounded-md font-semibold border-slate-300 text-black" onClick={()=>handleView(therapist)}><BiShow size={20}/>Show</button>
-                  <button className="flex mr-2 text-blue-700 p-1 bg-transparent border-2 font-semibold border-slate-300 rounded-md" onClick={()=>handleEdit(therapist)}><BiEditAlt size={20}/>Edit</button>
-                  <button className="flex mr-2 text-red-500  p-1 bg-transparent border-2 border-slate-300 rounded-md font-semibold" onClick={()=>handleDelete(therapist.id)}><MdDelete size={20}/>Delete</button>
+                  <button className="flex mr-2 bg-transparent p-2 border-2 rounded-md font-semibold border-slate-300 text-black" onClick={()=>handleView(therapist)}><BiShow size={25}/></button>
+                  <button className="flex mr-2 text-blue-700 p-1 bg-transparent border-2 font-semibold border-slate-300 rounded-md" onClick={()=>handleEdit(therapist)}><BiEditAlt size={25}/></button>
+                  <button className="flex mr-2 text-red-500  p-1 bg-transparent border-2 border-slate-300 rounded-md font-semibold" onClick={()=>handleDelete(therapist.id)}><MdDelete size={25}/></button>
 
                 </div>
               </td>
+             
             </tr>
           ))}
         </tbody>
@@ -180,7 +201,7 @@ export default function TherapistList({setActiveComponent}) {
         </div>
         ):(
 
-          <Create_Therapy/>
+          <Create_Therapy Add_Therapy={Add_Therapy}/>
         )}
        
       </Modal>

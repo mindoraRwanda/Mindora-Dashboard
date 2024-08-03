@@ -7,8 +7,8 @@ import Home from "../Components/Home";
 import AppointmentList from "../Components/AppointmentList";
 import VideoCall from "../Components/VideoCall";
 import Reports from '../Components/Reports';
-import TherapistList from "../Components/TherapistList";
-import UserList from "../Components/Admin/UserList";
+import AdminTherapistList from "../Components/Admin/AdminTherapistList";
+import AdminUserList from "../Components/Admin/AdminUserList";
 import Roles from "../Components/Admin/Roles";
 import FeedBack from "../Components/Admin/Feedback";
 import Engagement from "../Components/Admin/Engagement";
@@ -51,10 +51,10 @@ export default function DashboardPage() {
         return <Reports />;
 
       case "therapists":
-        return <TherapistList setActiveComponent={setActiveComponent} />;
+        return <AdminTherapistList setActiveComponent={setActiveComponent} />;
 
       case "users":
-        return <UserList setActiveComp={setActiveComponent} />;
+        return <AdminUserList setActiveComp={setActiveComponent} />;
         
       case "Create_User":
         return <Create_User/>

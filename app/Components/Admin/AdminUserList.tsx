@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { message, Modal } from "antd";
 import Create_User from "./Create_User";
 
-export default function UserList({ setActiveComp }) {
+export default function AdminUserList({ setActiveComp }) {
   const initialsUser = [
     {
       id: 1,
@@ -34,7 +34,6 @@ export default function UserList({ setActiveComp }) {
   const [users,setUsers]=useState(initialsUser);
   const [isEditable,setIsEditable]=useState(false);
 
-  // Handle search input and filter users based on name or email
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
@@ -84,6 +83,20 @@ export default function UserList({ setActiveComp }) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  const handleBlock=()=>{
+    message.info('You will block User');
+  };
+
+  const addUser=(newUser)=>{
+    newUser.id=users.length+1;
+    setUsers([...users,newUser]);
+    setFilteredUsers([...users,newUser]);
+    setIsModalVisible(false);
+    message.success("New User Added Successfully"); 
+
+  }
+  
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
       <div className="flex justify-between mb-4">
@@ -105,10 +118,10 @@ export default function UserList({ setActiveComp }) {
           </button>
         </div>
       </div>
-      <div className="flex float-right border-2 border-slate-300 rounded mt-4">
+      <div className="flex float-right border-2 border-slate-300 rounded-md  mt-4">
         <a
           onClick={showModal}
-          className=" text-purple-600 font-bold p-2 px-2 cursor-pointer"
+          className=" bg-purple-600 font-bold p-2 px-2 cursor-pointer text-white rounded-md "
         >
           {" "}
           + Add New
@@ -125,6 +138,10 @@ export default function UserList({ setActiveComp }) {
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Last Login
+            </th>
+         
+            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Status
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Actions
@@ -149,31 +166,37 @@ export default function UserList({ setActiveComp }) {
                   {user.lastLogin}
                 </div>
               </td>
+              <td className=" py-5 whitespace-no-wrap border-b border-gray-500">
+                <div className="text-sm leading-5 text-gray-900 ml-5">
+                <button className="border-2 border-gray-300 p-2 px-6 rounded-md font-semibold" onClick={handleBlock}>Active</button>
+                </div>
+              </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="flex text-sm leading-5 text-gray-900">
                   <button
                     className="flex mr-2 bg-transparent rounded border-2 border-slate-300 font-semibold  p-1 text-black"
                     onClick={() => handleView(user)}
                   >
-                    <BiShow size={20} />
-                    Show
+                    <BiShow size={25} />
+                    
                   </button>
                   <button
                     className="flex mr-2 text-blue-700 border-2 border-slate-300 p-1 rounded font-semibold"
                     onClick={() => handleEdit(user)}
                   >
-                    <BiEditAlt size={20} />
-                    Edit
+                    <BiEditAlt size={25} />
+                    
                   </button>
                   <button
                     className="flex mr-2 text-red-500 rounded  p-1 border-2 border-slate-300  font-semibold"
                     onClick={() => handleDelete(user.id)}
                   >
-                    <MdDelete size={20} />
-                    Delete
+                    <MdDelete size={25} />
+                    
                   </button>
                 </div>
               </td>
+            
             </tr>
           ))}
         </tbody>
@@ -217,7 +240,7 @@ export default function UserList({ setActiveComp }) {
             )}
           </div>
         ) : (
-          <Create_User />
+          <Create_User addUser={addUser}/>
         )}
       </Modal>
     </div>
