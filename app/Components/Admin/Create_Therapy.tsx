@@ -8,26 +8,26 @@ export default function Create_Therapy() {
       <Form className='bg-white p-10 rounded'>
         <p className='text-black mb-8 text-center text-xl font-semibold  '>Create New Therapy</p>
 
-        <div className='grid grid-cols-2 gap-4'>
+        <div className='grid grid-cols-1 gap-4'>
         <Form.Item >
          <Label class="font-semibold  text-sm mb-2">Names:</Label>
-          <Input className="flex w-80 h-3 p-4 rounded mt-2 bg-transparent border border-blue-600" />
+          <Input className="flex w-80 h-3 p-4 rounded  bg-transparent border border-blue-600" />
         </Form.Item>
         <Form.Item >
          <Label class="font-semibold  text-sm mb-2">Email:</Label>
-          <Input className="flex w-80 h-3 p-4 rounded mt-2 bg-transparent border border-blue-600" />
+          <Input className="flex w-80 h-3 p-4 rounded  bg-transparent border border-blue-600" />
         </Form.Item>
         <Form.Item >
           <Label class="font-semibold  text-sm mb-2"> Ages:</Label>
-          <Input className='flex w-80 h-3 p-4 rounded mt-2 bg-transparent border border-blue-600'/>
+          <Input className='flex w-80 h-3 p-4 rounded  bg-transparent border border-blue-600'/>
         </Form.Item>
         <Form.Item>
           <Label class="font-semibold  text-sm mb-2">Speciality:</Label>
-          <Input className='flex w-80 h-3 p-4 rounded mt-2 bg-transparent border border-blue-600'/>
+          <Input className='flex w-80 h-3 p-4 rounded  bg-transparent border border-blue-600'/>
         </Form.Item>
         <Form.Item>
           <Label class="font-semibold  text-sm mb-2">Address:</Label>
-          <Input className='flex w-80 h-3 p-4 rounded mt-2 bg-transparent border border-blue-600'/>
+          <Input className='flex w-80 h-3 p-4 rounded  bg-transparent border border-blue-600'/>
         </Form.Item>
        
         <Form.Item >

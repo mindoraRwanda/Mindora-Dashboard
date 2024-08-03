@@ -2,36 +2,77 @@ import { FiSearch } from "react-icons/fi";
 import { BiShow,BiEditAlt  } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
-import { message } from "antd";
+import { message, Modal } from "antd";
 import Link from "next/link";
 import Create_Therapy from '../Components/Admin/Create_Therapy';
 
 
 export default function TherapistList({setActiveComponent}) {
-  const therapists = [
+  const initaltherapists = [
     { id: 1, name: "Dr. Alice Johnson", specialty: "Cognitive Behavioral Therapy", patients: 25 },
     { id: 2, name: "Dr. Bob Smith", specialty: "Family Therapy", patients: 30 },
     { id: 3, name: "Dr. Carol Williams", specialty: "Child Psychology", patients: 20 },
     { id: 4, name: "Placide", specialty: "Boy", patients: 20 },
   ];
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredtherapists, setFilteredtherapists] = useState(therapists);
+  const [filteredtherapists, setFilteredtherapists] = useState(initaltherapists);
+  const [isShowModal,setShowModal]=useState(false);
+  const [isEditable,setIsEditable]=useState(false);
+  const [selectedTherapy,setSelectedTherapy]=useState(null);
+  const [Therapy,setTherapy]=useState(initaltherapists);
 
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
-    const filtered = therapists.filter(
+    const filtered = Therapy.filter(
       (therapist) =>
         therapist.name.toLowerCase().includes(query) ||
         therapist.specialty.toLowerCase().includes(query)
     );
     setFilteredtherapists(filtered);
-
-  
   };
-  const handleView=()=>{
-    message.info('This is not done yet');
+
+  const handleView = (therapist) => {
+    setSelectedTherapy(therapist);
+    setIsEditable(false);
+    setShowModal(true);
+  };
+
+  const showModal = () => {
+    setSelectedTherapy(null);
+    setIsEditable(true);
+    setShowModal(true);
+  };
+
+  const handleEdit=(therapist)=>{
+    setSelectedTherapy(therapist);
+    setIsEditable(true);
+    setShowModal(true);
+  };
+
+  const handleDelete=(therapyId)=>{
+    const updateTherapy = Therapy.filter((therapist)=>therapist.id !== therapyId);
+    setTherapy(updateTherapy);
+    setFilteredtherapists(updateTherapy);
+    message.success("Therapy Deleted SuccessFully");
+
+  };
+
+  const handleUpdate=(updateTherapy)=>{
+    const updateTherapies= Therapy.map((therapist)=>
+      therapist.id === updateTherapy.id ? updateTherapy:therapist);
+
+    setTherapy(updateTherapies);
+    setFilteredtherapists(updateTherapies);
+    setShowModal(false);
+    message.success("updated Therapy Successfully");
+  };
+
+
+  const handleCancel=()=>{
+    setShowModal(false);
+
   };
 
   return (
@@ -55,7 +96,7 @@ export default function TherapistList({setActiveComponent}) {
       
       <div className="flex float-right border-2 border-slate-300 rounded mt-4">
 
-      <a onClick={()=>setActiveComponent('Create_Therapy')}  className="  text-purple-600 font-bold p-2 px-2 cursor-pointer"> + Add New</a>
+      <a onClick={showModal}className="text-purple-600 font-bold p-2 px-2 cursor-pointer"> + Add New</a>
 
         </div>
       <table className="min-w-full">
@@ -89,9 +130,9 @@ export default function TherapistList({setActiveComponent}) {
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="flex text-sm leading-5 text-gray-900">
-                  <button className="flex mr-2 bg-transparent p-2 border-2 rounded-md font-semibold border-slate-300 text-black" onClick={handleView}><BiShow size={20}/>Show</button>
-                  <button className="flex mr-2 text-blue-700 p-1 bg-transparent border-2 font-semibold border-slate-300 rounded-md" onClick={handleView}><BiEditAlt size={20}/>Edit</button>
-                  <button className="flex mr-2 text-red-500  p-1 bg-transparent border-2 border-slate-300 rounded-md font-semibold" onClick={handleView}><MdDelete size={20}/>Delete</button>
+                  <button className="flex mr-2 bg-transparent p-2 border-2 rounded-md font-semibold border-slate-300 text-black" onClick={()=>handleView(therapist)}><BiShow size={20}/>Show</button>
+                  <button className="flex mr-2 text-blue-700 p-1 bg-transparent border-2 font-semibold border-slate-300 rounded-md" onClick={()=>handleEdit(therapist)}><BiEditAlt size={20}/>Edit</button>
+                  <button className="flex mr-2 text-red-500  p-1 bg-transparent border-2 border-slate-300 rounded-md font-semibold" onClick={()=>handleDelete(therapist.id)}><MdDelete size={20}/>Delete</button>
 
                 </div>
               </td>
@@ -99,6 +140,50 @@ export default function TherapistList({setActiveComponent}) {
           ))}
         </tbody>
       </table>
+      <Modal footer= {null} visible={isShowModal} onCancel={handleCancel}
+      >
+        {selectedTherapy ? (
+          <div>
+          <h2 className="text-xl font-semibold mb-4">
+            {
+              isEditable ? " Edit Therapy " :" Therapy Details "
+            }
+          </h2>
+          <p className="text-black m-3">
+            <span>Name:</span><br />
+            <input type="text" className="p-1 mt-2 border-2 rounded-md border-gray-300"
+             value={selectedTherapy.name}
+             readOnly={!isEditable}
+             onChange={(e)=>setSelectedTherapy({...selectedTherapy, name:e.target.value})}/>
+          </p>
+          <p className="text-black m-3">
+            <span>Speciality:</span><br/>
+
+            <input type="text" className="p-1 mt-2 rounded-md border-2 border-gray-300"
+            value={selectedTherapy.specialty}
+            readOnly={!isEditable}
+            onChange={(e)=>setSelectedTherapy({...selectedTherapy,specialty:e.target.value})}/>
+          </p>
+          
+          <p className="text-black m-3">
+            <span>Last Login:</span> <br />
+            <input type="number" className="p-1 mt-2 rounded-md border-2 border-gray-300"
+            value={selectedTherapy.patients}
+           readOnly={!isEditable}
+           onChange={(e)=>setSelectedTherapy({...selectedTherapy,patients:e.target.value})}/>
+          </p>
+
+          {isEditable &&(
+            <button onClick={()=>handleUpdate(selectedTherapy)} className="text-center border-2 p-2 ml-3 rounded-md bg-red-600 text-white font-semibold">Update
+            </button>
+          )}
+        </div>
+        ):(
+
+          <Create_Therapy/>
+        )}
+       
+      </Modal>
     </div>
   );
 }

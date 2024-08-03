@@ -4,11 +4,11 @@ export default function Create_User(){
     return(
         <div className='flex justify-center'>
       
-        <Form className='bg-white p-10 rounded'>
+        <Form className='bg-white p-6 rounded'>
           <p className='text-black mb-8 text-center text-xl font-semibold  '>Create New User</p>
   
-          <div className='grid grid-cols-2 gap-4'>
-          <Form.Item >
+          <div className='grid grid-cols-1 gap-4'>
+          <Form.Item  >
            <Label class="font-semibold  text-sm mb-2">Names:</Label>
             <Input className="flex w-80 h-3 p-4 rounded mt-2 bg-transparent border border-blue-600" />
           </Form.Item>
