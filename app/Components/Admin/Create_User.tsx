@@ -1,4 +1,4 @@
-import { Typography, Form, Input, Button } from 'antd';
+import { Typography, Form, Input, Button,Radio } from 'antd';
 import { useState } from 'react';
 const Label =Typography;
 export default function Create_User({addUser}){
@@ -24,27 +24,27 @@ const handleSubmit=()=>{
     return(
         <div className='flex justify-center'>
       
-        <Form className='bg-white p-6 rounded'>
+        <Form className='bg-white rounded'>
           <p className='text-black mb-8 text-center text-xl font-semibold'>Create New User</p>
   
           <div className='grid grid-cols-1 gap-4'>
           <Form.Item  >
            <Label class="font-semibold  text-sm mb-2">Names:</Label>
-            <Input className="flex w-96 h-5  p-5 rounded mt-2 bg-transparent border border-blue-600" 
+            <Input className="flex w-96 h-5  p-4 rounded mt-2 bg-transparent border border-blue-600" 
             value={name}
             onChange={(e)=>setName(e.target.value)}
             />
           </Form.Item>
           <Form.Item >
            <Label class="font-semibold  text-sm mb-2">Email:</Label>
-            <Input className="flex w-96 h-3  p-5 rounded mt-2 bg-transparent border border-blue-600" 
+            <Input className="flex w-96 h-3  p-4 rounded mt-2 bg-transparent border border-blue-600" 
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
             />
           </Form.Item>
           <Form.Item >
             <Label class="font-semibold  text-sm mb-2"> Ages:</Label>
-            <Input className='flex w-96 h-3 pr-10 p-5 rounded mt-2 bg-transparent border border-blue-600'
+            <Input className='flex w-96 h-3 pr-10 p-4 rounded mt-2 bg-transparent border border-blue-600'
             value={age}
             onChange={(e)=>setAge(e.target.value)}
             />
@@ -60,15 +60,14 @@ const handleSubmit=()=>{
          
           <Form.Item >
           <Label class="font-semibold  text-sm mb-2">Gender:</Label> 
-          <input class="form-check-input text-2xl" type="radio" name="gender" id="gender" value="male"
-           onChange={(e)=>setGender(e.target.value)}
-          />Male
-          <input class="form-check-input text-2xl ml-3" type="radio" name="gender" id="gender" value="female"
-          onChange={(e)=>setGender(e.target.value)}
-          />Female  
-          <input class="form-check-input text-2xl ml-3" type="radio" name="gender" id="gender" value="other"
-          onChange={(e)=>setGender(e.target.value)}
-          />Others    
+          <Radio.Group>
+        {/* <input class="form-check-input text-2xl" type="radio" name="gender" id="gender" value="male" onChange={(e)=>setGender(e.target.value)}/>Male */}
+        {/* {/* <input class="form-check-input text-2xl ml-3" type="radio" name="gender" id="gender" value="female" onChange={(e)=>setGender(e.target.value)}/>Female   */} 
+        {/* {/* <input class="form-check-input text-2xl ml-3" type="radio" name="gender" id="gender" value="other" onChange={(e)=>setGender(e.target.value)}/>Others    */} 
+  <Radio value="male" onChange={(e)=>setGender(e.target.value)}>Male</Radio>
+  <Radio value="female" onChange={(e)=>setGender(e.target.value)}>Female</Radio>
+  <Radio value="Others" onChange={(e)=>setGender(e.target.value)}>Others</Radio> 
+        </Radio.Group>   
            </Form.Item>
   
   

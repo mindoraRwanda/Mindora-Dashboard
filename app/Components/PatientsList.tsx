@@ -8,7 +8,7 @@ interface User {
   lastLogin: string;
 }
 
-export default function UserList() {
+export default function PatientsList() {
   // Initial list of users
   const initialUsers: User[] = [
     { id: 1, name: "John Doe", email: "john@example.com", lastLogin: "2024-07-18" },

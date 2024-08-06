@@ -63,11 +63,14 @@ export default function AdminUserList({ setActiveComp }) {
     setIsModalVisible(true);
   };
   const handleDelete=(userId)=>{
+    const confirmed=window.confirm('Are you sure you want to delete User?');
+
+    if(confirmed){
     const updateUsers = users.filter((user)=>user.id !== userId);
     setUsers(updateUsers);
     setFilteredUsers(updateUsers);
     message.success("User Deleted SuccessFully");
-
+    };
   };
 
   const handleUpdate=(updateUser)=>{

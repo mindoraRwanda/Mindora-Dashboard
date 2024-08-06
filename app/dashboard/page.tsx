@@ -24,6 +24,7 @@ import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
 import Settings from "../Components/Admin/Settings";
 import PatientsList from '../Components/PatientsList';
+import AdminPatientsList from '../Components/Admin/AdminPatientsList';
 import PatientMessages from '../Components/PatientMessages';
 import Create_Therapy from '../Components/Admin/Create_Therapy';
 import Create_User from '../Components/Admin/Create_User';
@@ -64,8 +65,8 @@ export default function DashboardPage() {
         return <FeedBack />;
       case "engagement":
       return <Engagement />;
-      case 'profile':
-        return <Profile/>
+      case 'Patient list':
+        return <AdminPatientsList/>;
       case 'appointment':
         return <Appointments/>
       case 'electronic health records':

@@ -52,10 +52,14 @@ export default function AdminTherapistList({setActiveComponent}) {
   };
 
   const handleDelete=(therapyId)=>{
-    const updateTherapy = Therapy.filter((therapist)=>therapist.id !== therapyId);
-    setTherapy(updateTherapy);
-    setFilteredtherapists(updateTherapy);
-    message.success("Therapy Deleted SuccessFully");
+    const confirmed=window.confirm('Are you sure you want to delete Therapy?');
+    if(confirmed){
+      const updateTherapy = Therapy.filter((therapist)=>therapist.id !== therapyId);
+      setTherapy(updateTherapy);
+      setFilteredtherapists(updateTherapy);
+      message.success("Therapy Deleted SuccessFully");
+    }
+   
 
   };
 
@@ -187,7 +191,7 @@ export default function AdminTherapistList({setActiveComponent}) {
           </p>
           
           <p className="text-black m-3">
-            <span>Last Login:</span> <br />
+            <span>Patients:</span> <br />
             <input type="number" className="p-1 mt-2 rounded-md border-2 border-gray-300"
             value={selectedTherapy.patients}
            readOnly={!isEditable}

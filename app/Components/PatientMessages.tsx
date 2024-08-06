@@ -15,21 +15,23 @@ export default function Messages() {
     switch (messages.type) {
       case 'progress':
         return (
-          <div className="mt-4 p-4 bg-blue-100 rounded-lg">
-            <h3 className="font-semibold">Monthly Patient Progress</h3>
-            <p>This report shows the progress of patients over the last month.</p>
-            <div className="mt-2">
+          <div className="mt-4 p-4 bg-black rounded-lg">
+            <h3 className="font-semibold  text-red-400">Monthly Patient Progress:</h3>
+           
+            <p className='text-black mt-3' >This report shows the progress of patients over the last month.</p>
+            <div className="mt-2 text-black">
               <FaChartBar className="inline mr-2" />
               Progress Chart would be displayed here
+       
             </div>
           </div>
         );
       case 'summary':
         return (
-          <div className="mt-4 p-4 bg-green-100 rounded-lg">
-            <h3 className="font-semibold">Therapy Session Summary</h3>
-            <p>A summary of all therapy sessions conducted this month.</p>
-            <ul className="list-disc list-inside mt-2">
+          <div className="mt-4 p-4 bg-black rounded-lg">
+            <h3 className="font-semibold text-red-400">Therapy Session Summary</h3>
+            <p className='text-black my-4'>A summary of all therapy sessions conducted this month.</p>
+            <ul className="list-disc list-inside mt-4 text-black">
               <li>Total sessions: 45</li>
               <li>Average session duration: 50 minutes</li>
               <li>Most common topics: Anxiety, Depression, Stress Management</li>
@@ -38,10 +40,10 @@ export default function Messages() {
         );
       case 'analysis':
         return (
-          <div className="mt-4 p-4 bg-purple-100 rounded-lg">
-            <h3 className="font-semibold">Treatment Effectiveness Analysis</h3>
-            <p>An analysis of the effectiveness of different treatment methods.</p>
-            <div className="mt-2">
+          <div className=" mt-4 p-4 bg-black  rounded-lg">
+            <h3 className="font-semibold  text-red-400 mb-4">Treatment Effectiveness Analysis:</h3>
+            <p className='text-black'>An analysis of the effectiveness of different treatment methods.</p>
+            <div className="mt-2 text-black">
               <FaChartBar className="inline mr-2" />
               Effectiveness comparison chart would be displayed here
             </div>
@@ -86,7 +88,7 @@ export default function Messages() {
         <div>
           {selectedReport && (
             <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">{selectedReport.title}</h3>
+              <h3 className="text-lg font-semibold mb-2 text-purple-600">{selectedReport.title}</h3>
               {renderReportDetails(selectedReport)}
              
             </div>
