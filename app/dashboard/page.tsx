@@ -28,6 +28,7 @@ import AdminPatientsList from '../Components/Admin/AdminPatientsList';
 import PatientMessages from '../Components/PatientMessages';
 import Create_Therapy from '../Components/Admin/Create_Therapy';
 import Create_User from '../Components/Admin/Create_User';
+import CreatePatient from '../Components/Admin/AdminCreatePatient';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -57,8 +58,7 @@ export default function DashboardPage() {
       case "users":
         return <AdminUserList setActiveComp={setActiveComponent} />;
         
-      case "Create_User":
-        return <Create_User/>
+     
       case "roles":
         return <Roles />;
       case "feedback":
@@ -87,9 +87,12 @@ export default function DashboardPage() {
           return <Legal/>
         case 'settings':
           return <Settings/>
-
+          case "Create_User":
+            return <Create_User/>
         case 'Create_Therapy':
         return <Create_Therapy/> 
+        case 'Create Patient':
+          return <CreatePatient/>
 
       default:
         return <Home userRole={userRole} />;

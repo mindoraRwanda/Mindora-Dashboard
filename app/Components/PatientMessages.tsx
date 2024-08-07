@@ -15,7 +15,7 @@ export default function Messages() {
     switch (messages.type) {
       case 'progress':
         return (
-          <div className="mt-4 p-4 bg-black rounded-lg">
+          <div className="mt-4 p-4 bg-slate-300 rounded-lg">
             <h3 className="font-semibold  text-red-400">Monthly Patient Progress:</h3>
            
             <p className='text-black mt-3' >This report shows the progress of patients over the last month.</p>
@@ -28,7 +28,7 @@ export default function Messages() {
         );
       case 'summary':
         return (
-          <div className="mt-4 p-4 bg-black rounded-lg">
+          <div className="mt-4 p-4 bg-slate-300 rounded-lg">
             <h3 className="font-semibold text-red-400">Therapy Session Summary</h3>
             <p className='text-black my-4'>A summary of all therapy sessions conducted this month.</p>
             <ul className="list-disc list-inside mt-4 text-black">
@@ -40,7 +40,7 @@ export default function Messages() {
         );
       case 'analysis':
         return (
-          <div className=" mt-4 p-4 bg-black  rounded-lg">
+          <div className=" mt-4 p-4 bg-slate-300  rounded-lg">
             <h3 className="font-semibold  text-red-400 mb-4">Treatment Effectiveness Analysis:</h3>
             <p className='text-black'>An analysis of the effectiveness of different treatment methods.</p>
             <div className="mt-2 text-black">

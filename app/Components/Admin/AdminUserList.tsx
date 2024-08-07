@@ -4,6 +4,7 @@ import { BiShow, BiEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { message, Modal } from "antd";
 import Create_User from "./Create_User";
+import VideoCall from "../VideoCall";
 
 export default function AdminUserList({ setActiveComp }) {
   const initialsUser = [
@@ -241,6 +242,7 @@ export default function AdminUserList({ setActiveComp }) {
               <button onClick={()=>handleUpdate(selectedUser)} className="text-center border-2 p-2 ml-3 rounded-md bg-red-600 text-white font-semibold">Update
               </button>
             )}
+            <VideoCall/>
           </div>
         ) : (
           <Create_User addUser={addUser}/>

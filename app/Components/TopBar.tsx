@@ -71,9 +71,9 @@ const handleCancel=()=>{
           </div>
         </div>
       </div>
-    <Modal title="Calendar" footer={null} visible={calendarModal} onCancel={handleCancel}>
-   <div>
-   <Calendar onChange={onChange} value={value}/>
+    <Modal title="Calendar" footer={null} visible={calendarModal} onCancel={handleCancel} className="text-center">
+   <div className="flex justify-center">
+   <Calendar onChange={onChange} value={value} />
    </div>
     </Modal>
     </header>
