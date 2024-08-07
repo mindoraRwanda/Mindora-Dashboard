@@ -29,6 +29,15 @@ import PatientMessages from '../Components/PatientMessages';
 import Create_Therapy from '../Components/Admin/Create_Therapy';
 import Create_User from '../Components/Admin/Create_User';
 import CreatePatient from '../Components/Admin/AdminCreatePatient';
+import TreatmentPlanupdate from '../Components/Therapist/TreatmentPlanupdate';
+import SetGoal from '../Components/Therapist/SetGoal';
+import TrackPatient from '../Components/Therapist/TrackPatient';
+import Recommendations from '../Components/Therapist/Recommandation';
+import PatientChart from '../Components/Therapist/PatientChart';
+import SearchingPatient from '@/app/Components/SearchingPatient';
+import ClinicRecord from '../Components/Therapist/ClinicRecord';
+import PatientsSurvey from '../Components/Therapist/PatientsSurvey';
+import Emergency from '../Components/Therapist/Emergency';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -40,7 +49,27 @@ export default function DashboardPage() {
   const [activeComponent, setActiveComponent] = useState("home");
 
   const renderComponent = () => {
-    switch(activeComponent) {
+    switch (activeComponent) {
+      case 'emegency':
+        return < Emergency/>
+      case 'patients feedback':
+        return < PatientsSurvey/>
+      case'Record':
+      return <ClinicRecord/>
+      case 'Searching':
+      return < SearchingPatient/>;
+      case 'TreatmentPlan':
+        return <TreatmentPlanupdate />;
+        case 'SetGoal':
+          return < SetGoal/>;
+          case 'TrackPatient':
+          return < TrackPatient/>;
+          case 'Recommandation':
+          return < Recommendations/>;
+      case 'Searching':
+        return <Searching />;
+      case 'patientChat':
+        return < PatientChart/>  
       case 'appointments':
         return <AppointmentList />;
       case "videoCall":
