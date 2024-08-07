@@ -66,8 +66,7 @@ export default function DashboardPage() {
           return < TrackPatient/>;
           case 'Recommandation':
           return < Recommendations/>;
-      case 'Searching':
-        return <Searching />;
+     
       case 'patientChat':
         return < PatientChart/>  
       case 'appointments':
