@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaFileAlt, FaDownload, FaChartBar } from 'react-icons/fa';
+import { FiSearch } from "react-icons/fi";
 
 // Define the Report interface
 interface Report {
@@ -19,9 +20,26 @@ export default function Reports() {
     { id: 2, title: "Therapy Session Summary", date: "2024-07-15", type: "summary" },
     { id: 3, title: "Treatment Effectiveness Analysis", date: "2024-07-30", type: "analysis" },
   ];
+// these are for search
+
+const [searchQuery, setSearchQuery] = useState("");
+const [filteredReports, setFilteredReports] = useState(reports);
+
+const handleSearch = (event) => {
+  const query = event.target.value.toLowerCase();
+  setSearchQuery(query);
+
+  const filtered = reports.filter(
+    (report) =>
+      report.title.toLowerCase().includes(query) ||
+    report.type.toLowerCase().includes(query)
+  );
+  setFilteredReports(filtered);
+};
 
   // Function to render the details of a selected report
   const renderReportDetails = (report: Report) => {
+
     switch (report.type) {
       case 'progress':
         return (
@@ -64,11 +82,26 @@ export default function Reports() {
 
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
-      <h2 className="text-2xl font-semibold mb-4">Reports</h2>
+        <div className="flex justify-between mb-4">
+        <h2 className="text-2xl font-semibold mb-4 text-purple-600">Reports</h2>
+        <div className="items-center border rounded bg-white flex float-right">
+          <input
+            type="text"
+            name="query"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={handleSearch}
+            className="rounded-l outline-none text-black m-3"
+          />
+          <button type="submit" className="p-2 text-xl text-black bg-white rounded-r">
+            <FiSearch />
+          </button>
+        </div>
+      </div>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <ul className="divide-y divide-gray-200">
-            {reports.map((report) => (
+            {filteredReports.map((report) => (
               <li key={report.id} className="py-4">
                 <div className="flex items-center space-x-4">
                   <div className="flex-shrink-0">
