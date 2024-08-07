@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 
-export default function TopBar({ userRole }) {
+export default function TopBar({ userRole }: { userRole: string }) {
   const router = useRouter();
 
   const handleLogout = () => {
@@ -8,7 +8,7 @@ export default function TopBar({ userRole }) {
   };
 
   return (
-    <header className="bg-white bg-opacity-90 shadow-lg">
+    <header className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-purple-600">
           {userRole === 'therapist' ? 'Therapist Dashboard' : 'Admin Dashboard'}

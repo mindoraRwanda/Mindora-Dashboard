@@ -11,6 +11,15 @@ import TherapistList from '../Components/TherapistList';
 import UserList from '../Components/UserList';
 import PatientsList from '@/app/Components/PatientsList';
 import PatientMessages from '../Components/PatientMessages';
+import TreatmentPlanupdate from '../Components/Therapist/TreatmentPlanupdate';
+import SetGoal from '../Components/Therapist/SetGoal';
+import TrackPatient from '../Components/Therapist/TrackPatient';
+import Recommendations from '../Components/Therapist/Recommandation';
+import PatientChart from '../Components/Therapist/PatientChart';
+import SearchingPatient from '@/app/Components/SearchingPatient';
+import ClinicRecord from '../Components/Therapist/ClinicRecord';
+import PatientsSurvey from '../Components/Therapist/PatientsSurvey';
+import Emergency from '../Components/Therapist/Emergency';
 
 type UserRoleType = 'therapist' | 'admin';
 
@@ -39,8 +48,26 @@ const DashboardPage: React.FC = () => {
 
   const renderComponent = () => {
     switch (activeComponent) {
+      case 'emegency':
+        return < Emergency/>
+      case 'patients feedback':
+        return < PatientsSurvey/>
+      case'Record':
+      return <ClinicRecord/>
+      case 'Searching':
+      return < SearchingPatient/>;
+      case 'TreatmentPlan':
+        return <TreatmentPlanupdate />;
+        case 'SetGoal':
+          return < SetGoal/>;
+          case 'TrackPatient':
+          return < TrackPatient/>;
+          case 'Recommandation':
+          return < Recommendations/>;
       case 'Searching':
         return <Searching />;
+      case 'patientChat':
+        return < PatientChart/>  
       case 'appointments':
         return <AppointmentList />;
       case 'videoCall':
@@ -69,13 +96,8 @@ const DashboardPage: React.FC = () => {
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar userRole={userRole} />
-        <div className="flex justify-end p-4">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="px-4 py-2 bg-gray-800 text-white rounded shadow hover:bg-gray-700 transition duration-300"
-          >
-            Toggle {darkMode ? 'Light' : 'Dark'} Mode
-          </button>
+        <div className="">
+          
         </div>
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-br from-purple-100 to-pink-100 p-6 dark:bg-gray-900 dark:text-white">
           {renderComponent()}

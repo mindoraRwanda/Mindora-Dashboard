@@ -8,11 +8,11 @@ interface User {
 }
 
 export default function SearchingPatient() {
-  // Initial list of users
+  // Initial list of users defined inside the component
   const users: User[] = [
     { id: 1, name: "John Doe", email: "john@example.com", lastLogin: "2024-07-18" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", lastLogin: "2024-07-17" },
-    { id: 3, name: "Bob Johnson", email: "bob@example.com", lastLogin: "2024-07-16" },
+    { id: 2, name: "Jane Smith", email: "jone@example.com", lastLogin: "2024-07-20" },
+    { id: 3, name: "Bob Johnson", email: "bob@example.com", lastLogin: "2024-07-21" },
   ];
 
   // State to store the search query
@@ -31,47 +31,40 @@ export default function SearchingPatient() {
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6">
-      <h2 className="text-2xl font-semibold mb-4">Users</h2>
+    <div className=" rounded-lg  p-3">
       <input
         type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={handleSearchChange}
-        className="mb-4 p-2 border border-gray-300 rounded-lg w-full text-black"
+        className="mb-2 p-1 border border-gray-300 rounded-lg w-full text-black"
       />
       
-      <table className="min-w-full">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Name
-            </th>
-            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Email
-            </th>
-            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Last Login
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Map over the filteredUsers array to display each user */}
-          {filteredUsers.map((user) => (
-            <tr key={user.id}>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 font-medium text-gray-900">{user.name}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 text-gray-900">{user.email}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 text-gray-900">{user.lastLogin}</div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Conditionally render the table only if the search query is not empty */}
+      {searchQuery ? (
+        filteredUsers.length > 0 ? (
+          <table className="min-w-full">
+            <tbody>
+              {/* Map over the filteredUsers array to display each user */}
+              {filteredUsers.map((user) => (
+                <tr key={user.id}>
+                  <td className="px-3 py-2 whitespace-no-wrap border-b border-gray-500">
+                    <div className="text-sm leading-5 font-medium text-gray-900">{user.name}</div>
+                  </td>
+                  <td className="px-3 py-2 whitespace-no-wrap border-b border-gray-500">
+                    <div className="text-sm leading-5 text-gray-900">{user.email}</div>
+                  </td>
+                  <td className="px-3 py-2 whitespace-no-wrap border-b border-gray-500">
+                    <div className="text-sm leading-5 text-gray-900">{user.lastLogin}</div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-gray-500">No users found.</p>
+        )
+      ) : null}
     </div>
   );
 }
