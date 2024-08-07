@@ -23,10 +23,8 @@ import {
   FaResearchgate,
   FaTemperatureHigh,
 } from "react-icons/fa";
-
-
 import { FaBarsProgress, FaHouseMedicalCircleCheck, FaKitMedical, FaNotesMedical, FaRecordVinyl, FaRegFaceSurprise } from "react-icons/fa6";
->>>>>>> therapy-dashboard
+
 import { GoChevronDown } from "react-icons/go";
 import { IoCaretDownSharp, IoPeople } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
@@ -224,7 +222,11 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
           </>
         ) : (
           <>
-            <div className="relative">
+
+            <a onClick={() => setActiveComponent('therapists')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <FaUserMd className="mr-3" /> View Therapists
+            </a>
+            {/* <div className="relative">
               <a
                 onClick={() => toggleDropdown("TherapistManagement")}
                 className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
@@ -252,50 +254,9 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
                     <p className="flex"><LuDot className="m-1 text-sm" /> Availability</p>
                   </a>
                 </div>
-              )}
-            </div>
-            <div className="relative">
-              <a
-                onClick={() => toggleDropdown("PatientManagement")}
-                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-              >
-                <FaRegUser className="mr-3" /> Patient Management <GoChevronDown className="ml-1" />
-              </a>
-              {openDropdown === "PatientManagement" && (
-                <div className="ml-6">
-                  <a
-                    onClick={() => setActiveComponent("ManageProfile")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1" />Manage Profile</p>
-                  </a>
-                  <a
-                    onClick={() => setActiveComponent("RequestHistory")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Request History</p>
-                  </a>
-                  <a
-                    onClick={() => setActiveComponent("AppointmentDetails")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Appointment Details</p>
-                  </a>
-                  <a
-                    onClick={() => setActiveComponent("Patient Notes")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Patient Notes</p>
-                  </a>
-                </div>
-              )}
-            </div>
-            <a
-              onClick={() => setActiveComponent("manageFinance")}
-              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-            >
-              <FaMoneyBillWave className="mr-3" /> Manage Finance
-            </a>
+              )} */}
+            {/* </div> */}
+           
             <div className="relative">
               <a onClick={() => toggleDropdown("userManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                 <FaRegUser className="mr-3 text-sm" /> User Management <GoChevronDown className="ml-1" />
@@ -351,6 +312,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
             </div>
             <a onClick={() => setActiveComponent("electronic health records")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <SiFiles className="mr-3" /> Electronic Health Records
+              </a>
             <a
               onClick={() => setActiveComponent("SystemLogs")}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
