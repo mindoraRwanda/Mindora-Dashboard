@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BiClinic } from "react-icons/bi";
 import {
   FaCalendarAlt,
   FaVideo,
@@ -11,8 +12,19 @@ import {
   FaRegUser,
   FaList,
   FaSearch,
-  FaMoneyBillWave
+  FaMoneyBillWave,
+  FaCalendarCheck,
+  FaFileMedicalAlt,
+  FaClinicMedical,
+  FaToolbox,
+  FaReadme,
+  FaEdit,
+  FaFileInvoice,
+  FaResearchgate,
+  FaTemperatureHigh,
 } from "react-icons/fa";
+import { FaBarsProgress, FaHouseMedicalCircleCheck, FaKitMedical, FaNotesMedical, FaRecordVinyl, FaRegFaceSurprise } from "react-icons/fa6";
+
 import { GoChevronDown } from "react-icons/go";
 import { IoCaretDownSharp, IoPeople } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
@@ -24,6 +36,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const toggleDropdown = (dropdown) => {
+    
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
@@ -44,30 +57,206 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
         </a>
         {userRole === "therapist" ? (
           <>
-            <a onClick={() => setActiveComponent("appointments")} className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200">
+            <a
+              onClick={() => setActiveComponent("appointments")}
+              className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
+            >
               <FaCalendarAlt className="mr-3" /> View Appointments
             </a>
-            <a onClick={() => setActiveComponent("videoCall")} className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200">
+            <a
+              onClick={() => setActiveComponent("videoCall")}
+              className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
+            >
               <FaVideo className="mr-3" /> Make Video Call
             </a>
-            <a onClick={() => setActiveComponent('Patients')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+            <a
+              onClick={() => setActiveComponent('Patients')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
               <FaList className="mr-3" /> Patients List
             </a>
-            <a onClick={() => setActiveComponent('Messages')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+            <a
+              onClick={() => setActiveComponent('Messages')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
               <MdOutlineMessage className="mr-3" /> Patients Messages
             </a>
-            <a onClick={() => setActiveComponent('reports')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+            <a
+              onClick={() => setActiveComponent('reports')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
               <FaChartBar className="mr-3" /> View Reports
             </a>
-            <a onClick={() => setActiveComponent('settings')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-              <MdOutlineSettings className="mr-3" /> Setting
+            <div className="relative">
+              <a
+                onClick={() => toggleDropdown("TreatmentPlan")}
+                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+              >
+                <FaCalendarCheck className="mr-3" /> Treatment Plan <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "TreatmentPlan" && (
+                <div className="ml-6">
+                  <a
+                    onClick={() => setActiveComponent("TreatmentPlan")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1" />Create and Update</p>
+                  </a>
+                  <a
+                    onClick={() => setActiveComponent("SetGoal")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Set Goals and Milestones</p>
+                  </a>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <a
+                onClick={() => toggleDropdown("MedicationManagement")}
+                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+              >
+                <FaNotesMedical className="mr-3" /> Medication Management <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "MedicationManagement" && (
+                <div className="ml-6">
+                  <a
+                    onClick={() => setActiveComponent("TrackPatient")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1" />Track Patient</p>
+                  </a>
+                  <a
+                    onClick={() => setActiveComponent("Recommandation")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Provide Recommendations</p>
+                  </a>
+                </div>
+              )}
+            </div>
+            <div className="relative">
+              <a
+                onClick={() => toggleDropdown("PatientProgress")}
+                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+              >
+                <FaBarsProgress className="mr-3" /> Patient Progress <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "PatientProgress" && (
+                <div className="ml-6">
+                  <a
+                    onClick={() => setActiveComponent("patientChat")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1" />Patient Chart</p>
+                  </a>
+                  <a
+                    onClick={() => setActiveComponent("appointment")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Report</p>
+                  </a>
+                </div>
+              )}
+            </div>
+            <a
+              onClick={() => setActiveComponent('Record')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <FaEdit className="mr-3" /> Recording Patient
             </a>
+            <a
+              onClick={() => setActiveComponent('Record')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <FaReadme className="mr-3" /> Education Resources
+            </a>
+            <a
+              onClick={() => setActiveComponent('Record')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <FaRegFaceSurprise className="mr-3" /> Referral and Collaboration
+            </a>
+            <a
+              onClick={() => setActiveComponent('Record')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <FaFileInvoice className="mr-3" /> Billing and Insurance
+            </a>
+            <a
+              onClick={() => setActiveComponent('patients feedback')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <FaResearchgate className="mr-3" /> Patients Feedback
+            </a>
+            <a
+              onClick={() => setActiveComponent('emergency')}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <FaTemperatureHigh className="mr-3" /> Emergency
+            </a>
+            <div className="relative">
+              <a
+                onClick={() => toggleDropdown("Notification")}
+                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+              >
+                <PiCallBellBold className="mr-3" /> Notification <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "Notification" && (
+                <div className="ml-6">
+                  <a
+                    onClick={() => setActiveComponent("SendNotification")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1" />Send Notification</p>
+                  </a>
+                  <a
+                    onClick={() => setActiveComponent("ViewNotification")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1 text-sm" /> View Notification</p>
+                  </a>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>
+
             <a onClick={() => setActiveComponent('therapists')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <FaUserMd className="mr-3" /> View Therapists
             </a>
+            {/* <div className="relative">
+              <a
+                onClick={() => toggleDropdown("TherapistManagement")}
+                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+              >
+                <FaUsers className="mr-3" /> Therapist Management <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "TherapistManagement" && (
+                <div className="ml-6">
+                  <a
+                    onClick={() => setActiveComponent("Create and Update")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1" />Create and Update</p>
+                  </a>
+                  <a
+                    onClick={() => setActiveComponent("Schedules")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Schedules</p>
+                  </a>
+                  <a
+                    onClick={() => setActiveComponent("Availability")}
+                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+                  >
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Availability</p>
+                  </a>
+                </div>
+              )} */}
+            {/* </div> */}
+           
             <div className="relative">
               <a onClick={() => toggleDropdown("userManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                 <FaRegUser className="mr-3 text-sm" /> User Management <GoChevronDown className="ml-1" />
@@ -75,11 +264,9 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               {openDropdown === "userManagement" && (
                 <div className="ml-6">
                   <a onClick={() => setActiveComponent("users")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1" /> User Account</p>
+                    <p className="flex"><LuDot className="m-1" /> User details</p>
                   </a>
-                  <a onClick={() => setActiveComponent("roles")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Role and Permissions</p>
-                  </a>
+                 
                   <a onClick={() => setActiveComponent("feedback")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> User Feedback</p>
                   </a>
@@ -90,41 +277,58 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               )}
             </div>
             <div className="relative">
-              <a onClick={() => toggleDropdown("patientManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                <IoPeople className="mr-3" /> Patient Management <GoChevronDown className="ml-1" />
-              </a>
-              {openDropdown === "patientManagement" && (
-                <div className="ml-6">
-                  <a onClick={() => setActiveComponent("profile")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1" /> Patient Profile</p>
-                  </a>
-                  <a onClick={() => setActiveComponent("appointment")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Appointments</p>
-                  </a>
-                </div>
-              )}
-            </div>
-            <a onClick={() => setActiveComponent("electronic health records")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-              <SiFiles className="mr-3" /> Electronic Health Records
-            </a>
-            <a onClick={() => setActiveComponent("communication")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-              <PiCallBellBold className="mr-3 text-xl" /> Communication Management
-            </a>
-            <div className="relative">
               <a onClick={() => toggleDropdown("systemManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                 <SiArkecosystem className="mr-3" /> System Management <GoChevronDown className="ml-1" />
               </a>
               {openDropdown === "systemManagement" && (
                 <div className="ml-6">
-                  <a onClick={() => setActiveComponent("system management")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1" /> System Management</p>
+                 <a onClick={() => setActiveComponent("roles")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Role and Permissions</p>
                   </a>
+                 
                   <a onClick={() => setActiveComponent("system updates")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> System Updates and Maintenance</p>
                   </a>
                 </div>
               )}
             </div>
+            <div className="relative">
+              <a onClick={() => toggleDropdown("patientManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                <IoPeople className="mr-3" /> Patient Management <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "patientManagement" && (
+                <div className="ml-6">
+                  <a onClick={() => setActiveComponent("Patient list")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1" /> Patient List</p>
+                  </a>
+                  <a onClick={() => setActiveComponent("appointment")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Appointments</p>
+                  </a>
+                  <a onClick={() => setActiveComponent("Messages")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Patient Message</p>
+                  </a>
+                </div>
+              )}
+            </div>
+            <a onClick={() => setActiveComponent("electronic health records")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <SiFiles className="mr-3" /> Electronic Health Records
+              </a>
+            <a
+              onClick={() => setActiveComponent("SystemLogs")}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <SiFiles className="mr-3" /> System Logs
+            </a>
+            <a
+              onClick={() => setActiveComponent("Analytics")}
+              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
+            >
+              <SiDatabricks className="mr-3" /> Analytics
+            </a>
+            <a onClick={() => setActiveComponent("communication")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <PiCallBellBold className="mr-3 text-xl" /> Communication Management
+            </a>
+           
             <div className="relative">
               <a onClick={() => toggleDropdown("dataManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                 <SiDatabricks className="mr-3" /> Data Management <GoChevronDown className="ml-1" />
