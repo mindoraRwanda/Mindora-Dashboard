@@ -7,8 +7,8 @@ import Home from "../Components/Home";
 import AppointmentList from "../Components/AppointmentList";
 import VideoCall from "../Components/VideoCall";
 import Reports from '../Components/Reports';
-import TherapistList from "../Components/TherapistList";
-import UserList from "../Components/Admin/UserList";
+import AdminTherapistList from "../Components/Admin/AdminTherapistList";
+import AdminUserList from "../Components/Admin/AdminUserList";
 import Roles from "../Components/Admin/Roles";
 import FeedBack from "../Components/Admin/Feedback";
 import Engagement from "../Components/Admin/Engagement";
@@ -24,7 +24,11 @@ import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
 import Settings from "../Components/Admin/Settings";
 import PatientsList from '../Components/PatientsList';
+import AdminPatientsList from '../Components/Admin/AdminPatientsList';
 import PatientMessages from '../Components/PatientMessages';
+import Create_Therapy from '../Components/Admin/Create_Therapy';
+import Create_User from '../Components/Admin/Create_User';
+import CreatePatient from '../Components/Admin/AdminCreatePatient';
 import TreatmentPlanupdate from '../Components/Therapist/TreatmentPlanupdate';
 import SetGoal from '../Components/Therapist/SetGoal';
 import TrackPatient from '../Components/Therapist/TrackPatient';
@@ -45,7 +49,26 @@ export default function DashboardPage() {
   const [activeComponent, setActiveComponent] = useState("home");
 
   const renderComponent = () => {
-    switch(activeComponent) {
+    switch (activeComponent) {
+      case 'emegency':
+        return < Emergency/>
+      case 'patients feedback':
+        return < PatientsSurvey/>
+      case'Record':
+      return <ClinicRecord/>
+      case 'Searching':
+      return < SearchingPatient/>;
+      case 'TreatmentPlan':
+        return <TreatmentPlanupdate />;
+        case 'SetGoal':
+          return < SetGoal/>;
+          case 'TrackPatient':
+          return < TrackPatient/>;
+          case 'Recommandation':
+          return < Recommendations/>;
+     
+      case 'patientChat':
+        return < PatientChart/>  
       case 'appointments':
         return <AppointmentList />;
       case "videoCall":
@@ -56,18 +79,22 @@ export default function DashboardPage() {
         return <PatientMessages />;
       case 'reports':
         return <Reports />;
+
       case "therapists":
-        return <TherapistList />;
+        return <AdminTherapistList setActiveComponent={setActiveComponent} />;
+
       case "users":
-        return <UserList />;
+        return <AdminUserList setActiveComp={setActiveComponent} />;
+        
+     
       case "roles":
         return <Roles />;
       case "feedback":
         return <FeedBack />;
       case "engagement":
       return <Engagement />;
-      case 'profile':
-        return <Profile/>
+      case 'Patient list':
+        return <AdminPatientsList/>;
       case 'appointment':
         return <Appointments/>
       case 'electronic health records':
@@ -88,6 +115,13 @@ export default function DashboardPage() {
           return <Legal/>
         case 'settings':
           return <Settings/>
+          case "Create_User":
+            return <Create_User/>
+        case 'Create_Therapy':
+        return <Create_Therapy/> 
+        case 'Create Patient':
+          return <CreatePatient/>
+
       default:
         return <Home userRole={userRole} />;
     }
@@ -108,6 +142,7 @@ export default function DashboardPage() {
         </main>
       </div>
     </div>
+   
   );
 };
 
