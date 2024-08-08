@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BiClinic } from "react-icons/bi";
+
 import {
   FaCalendarAlt,
   FaVideo,
@@ -18,10 +19,11 @@ import {
   FaClinicMedical,
   FaToolbox,
   FaReadme,
-  FaEdit,
   FaFileInvoice,
   FaResearchgate,
   FaTemperatureHigh,
+  FaSearch,
+  FaMoneyBillWave
 } from "react-icons/fa";
 import { FaBarsProgress, FaHouseMedicalCircleCheck, FaKitMedical, FaNotesMedical, FaRecordVinyl, FaRegFaceSurprise } from "react-icons/fa6";
 
@@ -67,6 +69,10 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               onClick={() => setActiveComponent("videoCall")}
               className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
             >
+            <a onClick={() => setActiveComponent("appointments")} className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200">
+              <FaCalendarAlt className="mr-3" /> View Appointments
+            </a>
+            <a onClick={() => setActiveComponent("videoCall")} className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200">
               <FaVideo className="mr-3" /> Make Video Call
             </a>
             <a
@@ -79,6 +85,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               onClick={() => setActiveComponent('Messages')}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
+            <a onClick={() => setActiveComponent('Messages')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <MdOutlineMessage className="mr-3" /> Patients Messages
             </a>
             <a
@@ -164,6 +171,8 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <FaEdit className="mr-3" /> Recording Patient
+            <a onClick={() => setActiveComponent('settings')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <MdOutlineSettings className="mr-3" /> Setting
             </a>
             <a
               onClick={() => setActiveComponent('Record')}
