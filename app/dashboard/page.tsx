@@ -38,6 +38,7 @@ import SearchingPatient from '@/app/Components/SearchingPatient';
 import ClinicRecord from '../Components/Therapist/ClinicRecord';
 import PatientsSurvey from '../Components/Therapist/PatientsSurvey';
 import Emergency from '../Components/Therapist/Emergency';
+import ContentManage from '../Components/Admin/ContentManage';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -105,6 +106,8 @@ export default function DashboardPage() {
         return <System_Manage/>
       case 'system updates':
         return <Systen_Updates/>
+        case 'Content Management':
+          return <ContentManage/>
       case 'data security':
         return <Data_Security/>
         case 'data backup':

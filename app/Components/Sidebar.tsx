@@ -15,13 +15,9 @@ import {
   FaMoneyBillWave,
   FaCalendarCheck,
   FaFileMedicalAlt,
-  FaClinicMedical,
-  FaToolbox,
+  FaClinicMedical,FaToolbox,
   FaReadme,
-  FaEdit,
-  FaFileInvoice,
-  FaResearchgate,
-  FaTemperatureHigh,
+  FaEdit,FaFileInvoice,FaResearchgate,FaTemperatureHigh,
 } from "react-icons/fa";
 import { FaBarsProgress, FaHouseMedicalCircleCheck, FaKitMedical, FaNotesMedical, FaRecordVinyl, FaRegFaceSurprise } from "react-icons/fa6";
 
@@ -289,6 +285,9 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
                   <a onClick={() => setActiveComponent("system updates")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> System Updates and Maintenance</p>
                   </a>
+                  <a onClick={() => setActiveComponent("Content Management")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Content Management</p>
+                  </a>
                 </div>
               )}
             </div>
@@ -353,7 +352,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
             <a onClick={() => setActiveComponent("legal and compliance")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <p className="flex"><MdOutlineDocumentScanner className="m-1 text-xl" /> Legal and Compliance</p>
             </a>
-            <a onClick={() => setActiveComponent("settings")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+            <a onClick={() => setActiveComponent("settings")} className="flex items-center text-2xl px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <FaCog className="mr-3" /> Settings
             </a>
            

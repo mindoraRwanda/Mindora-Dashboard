@@ -20,20 +20,23 @@ Chart.register(DoughnutController, ArcElement, Legend, Tooltip);
 const Home = ({ userRole }) => {
 
   const chartRef = useRef(null);
-  const chartRefTherapy=useRef(null);
+  const chartRefUser=useRef(null);
 
   const chartIns = useRef(null);
   const chartInsTherapy= useRef(null);
 
-  useEffect(() => {
-    if (chartRef.current) {
-      const ctx = chartRef.current.getContext("2d");
+  const chartPat = useRef(null);
+  const chartInsPat= useRef(null);
 
-      if (chartIns.current) {
-        chartIns.current.destroy();
+  useEffect(() => {
+    if (chartIns.current) {
+      const ctx = chartIns.current.getContext("2d");
+
+      if (chartInsTherapy.current) {
+        chartInsTherapy.current.destroy();
       }
 
-      chartIns.current = new Chart(ctx, {
+      chartInsTherapy.current = new Chart(ctx, {
         type: "doughnut",
         data: {
           labels: ["Female[70]", "Male[10]"],
@@ -48,15 +51,16 @@ const Home = ({ userRole }) => {
     }
   });
 
-  useEffect(() => {
-    if (chartRefTherapy.current) {
-      const ctx = chartRefTherapy.current.getContext("2d");
 
-      if (chartInsTherapy.current) {
-        chartInsTherapy.current.destroy();
+  useEffect(() => {
+    if (chartRef.current) {
+      const ctx = chartRef.current.getContext("2d");
+
+      if (chartRefUser.current) {
+        chartRefUser.current.destroy();
       }
 
-      chartInsTherapy.current = new Chart(ctx, {
+      chartRefUser.current = new Chart(ctx, {
         type: "doughnut",
         data: {
           labels: ["Female[50]", "Male[30]"],
@@ -70,6 +74,29 @@ const Home = ({ userRole }) => {
       });
     }
   });
+  useEffect(() => {
+    if (chartPat.current) {
+      const ctx = chartPat.current.getContext("2d");
+
+      if (chartInsPat.current) {
+        chartInsPat.current.destroy();
+      }
+
+      chartInsPat.current = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Female[10]", "Male[40]"],
+          datasets: [
+            {
+              data: [10, 40],
+              backgroundColor: ["#41B06E", "#387ADF"],
+            },
+          ],
+        },
+      });
+    }
+  });
+
   return (
     // This is for Therapiest
 
@@ -164,9 +191,14 @@ const Home = ({ userRole }) => {
               <p className="text-black font-semibold text-2xl text-center my-3">
                 Therapy Categories
               </p>
-              <canvas ref={chartRefTherapy}></canvas>
+              <canvas ref={chartIns}></canvas>
             </div>
-
+            <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl hover:-translate-y-1 transform cursor-pointer duration-300  float-start h-fit  pb-2">
+              <p className="text-black font-semibold text-2xl text-center my-3">
+                Patient Categories
+              </p>
+              <canvas ref={chartPat}></canvas>
+            </div>
             </div>
           </>
         )}
