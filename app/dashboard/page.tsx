@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from "../Components/Sidebar";
 import TopBar from "../Components/TopBar";
-import Home from "../Components/Home";
+import Home from "../Components/Admin/AdminHome";
 import AppointmentList from "../Components/AppointmentList";
 import VideoCall from "../Components/VideoCall";
 import Reports from '../Components/Reports';
