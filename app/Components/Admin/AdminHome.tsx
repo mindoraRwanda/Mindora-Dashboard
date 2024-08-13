@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 import { MdAddCircle } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
-import { Form, Input, Modal } from "antd";
+import { Form, Image, Input, Modal } from "antd";
 import FormItem from "antd/es/form/FormItem";
 
 Chart.register(DoughnutController, ArcElement, Legend, Tooltip);
@@ -25,6 +25,7 @@ const list = [
     name: "Alice",
     role: "Cognitive Behavioral Therapy",
     phone:"+250 789897235",
+    amount:"$20",
     lastmeet:"2024.08.12"
   
   },
@@ -34,10 +35,11 @@ const list = [
     name: "Muvunyi",
     role: "Child Psychology",
     phone:"+250 789262736",
+    amount:"$30",
     lastmeet:"2024.08.12"
    
   },
-  { id: 4, name: "Placide", role: "Boy's Methal", phone:"+25 078432535",lastmeet:"2024.08.12" },
+  { id: 4, name: "Placide", role: "Boy's Methal", phone:"+25 078432535",amount:"$100",lastmeet:"2024.08.12" },
 ];
 
 const Home = ({ userRole }) => {
@@ -140,7 +142,7 @@ const hanleCancelModal=()=>{
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 ">
               <div className="flex items-center">
                 <div className="p-3 rounded-full bg-green-600 bg-opacity-75 text-white">
                   <FaVideo size={24} />
@@ -226,7 +228,7 @@ const hanleCancelModal=()=>{
       {/* Move Recent Events and Upcoming Events to below the other content */}
       {userRole === "admin" && (
               <div className="flex gap-7 mt-8">
-                <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1    w-3/5">
+                <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1  w-3/5">
                   <h4 className="text-2xl font-semibold text-purple-600 mb-4">Recent Convesations</h4>
                  <table className="min-w-full">
                   <thead>
@@ -262,18 +264,20 @@ const hanleCancelModal=()=>{
                 </div>
                 <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-2/5">
                   <h4 className="text-2xl font-semibold text-purple-600 mb-4">Upcoming Meetings</h4>
-                 <div className="text-black border border-gray-300 m-2 p-2 rounded">
+                 <div className="text-black border border-gray-300 m-5 p-2 rounded">
                   <strong>Boy Mental therapy:: Placide</strong><br />
                   <p className="leading-3 capitalize my-2">To day at:2:00 - 3:00</p>
                   <p className="leading-3 capitalize my-2">@ meet.google.mxz</p>
                  </div>
-                 <div className="text-black border border-gray-300 m-2 p-2 rounded">
+                 <div className="text-black border border-gray-300 m-5 p-2 rounded">
                   <strong>Family therapy:: Alice</strong><br />
                   <p className="leading-3 capitalize my-2">Tomorrow at:17:00 - 19:00</p>
                   <p className="leading-3 capitalize my-2">@ meet.google.mxz</p>
                  </div>
-                 <button className="text-white bg-purple-600 border border-gray-300 rounded px-2 py-1 flex float-right" onClick={handleModal}><MdAddCircle size={24}/>Add</button>
+                 <button className="text-white bg-purple-600 border border-gray-300 rounded px-3 mr-4 py-1 flex float-right" onClick={handleModal}><MdAddCircle size={24}/>Add</button>
                 </div>
+
+               
                 <Modal title="Add the Upcoming Event" visible={visible} onCancel={hanleCancelModal} footer={null}>
                 
                   <Form>
@@ -298,7 +302,73 @@ const hanleCancelModal=()=>{
                     </div>
                     </Modal>
               </div>
+              
             )}
+
+                   {userRole==="admin"&&(
+                     <div className="flex gap-7 mt-8">
+                    <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1  w-4/6">
+                    <h4 className="text-2xl font-semibold text-purple-600 mb-4">Payment Management</h4>
+                    <p className="text-black text-lg my-4 font-semibold"> Recent Payroll</p>
+
+                  <table className="min-w-full">
+                    <thead >
+                      <tr className="gap-5 border-b-2 border-gray-300 px-5 py-2">
+                        <th className="text-black capitalize text-xs leading-5 text-left  ">Patient Name</th>
+                        <th className="text-black capitalize text-xs leading-5 text-left px-5 py-2 flex float-right">Amount Payed</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                  {list.map((list)=>(
+                  <tr key={list.id}>
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="text-sm leading-5 font-medium text-gray-900">
+                  {list.name}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="text-sm leading-5 font-medium text-gray-900 flex float-right">
+                  {list.amount}
+                </div>
+              </td>
+              </tr>
+              ))}
+
+              </tbody>
+                  </table>
+                   
+                    </div>
+                    <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-2/6 ">
+                    <h4 className="text-2xl font-semibold text-purple-600 mb-4">Payment System</h4>
+                    <div className="border border-gray-300 rounded">
+                      <div className="flex">
+                      <div>
+                      <Image src="/Images/momo.jpg" alt="momo" width={70} height={73} className="rounded"/>
+                      </div>
+                      <div>
+                      <p className="px-2 text-xl text-black m-1">Payed with Mobile Money</p>
+                      <p className="text-black text-xl font-semibold ml-2">+25 0789897235</p>
+                      </div>
+                      </div>
+                      <strong className="text-black text-md font-sans text-center"> Total Amount: $100</strong>
+                    </div>
+                  
+                    <div className="border border-gray-300 rounded mt-8">
+                      <div className="flex">
+                      <div>
+                      <Image src="/Images/paypal.png" alt="paypal" width={70} height={73} className="rounded"/>
+                      </div>
+                      <div>
+                      <p className="px-2 text-xl text-black m-1">Payed with PayPal</p>
+                      <p className="text-black text-xl font-semibold ml-2">1122363674674376</p>
+                      </div>
+                      </div>
+                      <strong className="text-black text-md font-sans text-center"> Total Amount: $50</strong>
+                    </div>
+                    </div>
+                    </div>
+                )}
+              
     </div>
   );
 };

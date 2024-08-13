@@ -300,9 +300,9 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
                     <p className="flex"><LuDot className="m-1 text-sm" /> Role and Permissions</p>
                   </a>
                  
-                  <a onClick={() => setActiveComponent("system updates")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                  {/* <a onClick={() => setActiveComponent("system updates")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> System Updates and Maintenance</p>
-                  </a>
+                  </a> */}
                   <a onClick={() => setActiveComponent("Content Management")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> Content Management</p>
                   </a>
@@ -310,25 +310,25 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               )}
             </div>
             
-            <a onClick={() => setActiveComponent("electronic health records")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-              <SiFiles className="mr-3" /> Electronic Health Records
-              </a>
+           
             {/* <a
               onClick={() => setActiveComponent("SystemLogs")}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <SiFiles className="mr-3" /> System Logs
             </a> */}
-            <a
+            {/* <a
               onClick={() => setActiveComponent("Analytics")}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <SiDatabricks className="mr-3" /> Analytics
-            </a>
+            </a> */}
             <a onClick={() => setActiveComponent("communication")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <PiCallBellBold className="mr-3 text-xl" /> Community Management
             </a>
-           
+            <a onClick={() => setActiveComponent("electronic health records")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <SiFiles className="mr-3" /> Electronic Health Records
+              </a>
             <div className="relative">
               <a onClick={() => toggleDropdown("dataManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                 <SiDatabricks className="mr-3" /> Data Management <GoChevronDown className="ml-1" />
