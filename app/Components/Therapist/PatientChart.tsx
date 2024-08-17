@@ -1,7 +1,8 @@
-import { useEffect } from "react";
-import { Chart } from "chart.js";
+import React, { useEffect, useRef } from 'react';
+import { Chart, CategoryScale, BarController, BarElement, LinearScale } from 'chart.js';
+Chart.register(CategoryScale, BarController, BarElement, LinearScale);
 
-function Example() {
+function PatientsChart() {
     useEffect(() => {
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -42,11 +43,13 @@ function Example() {
                         }
                     }
                 },
+                
                 scales: {
                     x: {
                         ticks: {
                             color: 'black' // set x-axis tick color to black
                         },
+                        type: 'category',
                         grid: {
                             color: 'rgba(0, 0, 0, 0.1)' // set x-axis grid color
                         }
@@ -55,6 +58,7 @@ function Example() {
                         ticks: {
                             color: 'black' // set y-axis tick color to black
                         },
+                        type: 'category',
                         grid: {
                             color: 'rgba(0, 0, 0, 0.1)' // set y-axis grid color
                         }
@@ -83,4 +87,4 @@ function Example() {
     );
 }
 
-export default Example;
+export default PatientsChart;
