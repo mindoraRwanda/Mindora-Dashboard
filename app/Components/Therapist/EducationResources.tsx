@@ -1,0 +1,167 @@
+import {
+    FaCalendarAlt,
+    FaVideo,
+    FaChartBar,
+    FaUserMd,
+    FaUsers,
+    FaHome,
+  } from "react-icons/fa";
+  import {
+    Chart,
+    DoughnutController,
+    ArcElement,
+    Legend,
+    Tooltip,
+  } from "chart.js";
+  import { useEffect, useRef } from "react";
+import { FaBookBookmark, FaGamepad } from "react-icons/fa6";
+  
+  Chart.register(DoughnutController, ArcElement, Legend, Tooltip);
+  
+  const Home = ({ userRole }) => {
+  
+    const chartRef = useRef(null);
+    const chartRefTherapy=useRef(null);
+  
+    const chartIns = useRef(null);
+    const chartInsTherapy= useRef(null);
+  
+    useEffect(() => {
+      if (chartRef.current) {
+        const ctx = chartRef.current.getContext("2d");
+  
+        if (chartIns.current) {
+          chartIns.current.destroy();
+        }
+  
+        chartIns.current = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Female[70]", "Male[10]"],
+            datasets: [
+              {
+                data: [70, 10],
+                backgroundColor: ["#FBA834", "#387ADF"],
+              },
+            ],
+          },
+        });
+      }
+    });
+  
+    useEffect(() => {
+      if (chartRefTherapy.current) {
+        const ctx = chartRefTherapy.current.getContext("2d");
+  
+        if (chartInsTherapy.current) {
+          chartInsTherapy.current.destroy();
+        }
+  
+        chartInsTherapy.current = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Female[50]", "Male[30]"],
+            datasets: [
+              {
+                data: [50, 30],
+                backgroundColor: ["#41B06E", "#F7C04A"],
+              },
+            ],
+          },
+        });
+      }
+    });
+    return (
+      // This is for Therapiest
+  
+      <div className="container mx-auto px-6 py-8">
+        <h3 className="text-gray-700 text-3xl font-medium mb-6">
+          Education Resoutces {userRole === "therapist" ? "Dr. Smith" : ""}!
+        </h3>
+  
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {userRole === "therapist" ? (
+            <>
+              <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-full bg-indigo-600 bg-opacity-75 text-white">
+                    <FaCalendarAlt size={24} />
+                  </div>
+                  <div className="ml-5">
+                    <h4 className="text-2xl font-semibold text-gray-700">8</h4>
+                    <div className="text-gray-500">New Appointments</div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-full bg-green-600 bg-opacity-75 text-white">
+                    <FaVideo size={24} />
+                  </div>
+                  <div className="ml-5">
+                    <h4 className="text-2xl font-semibold text-gray-700">3</h4>
+                    <div className="text-gray-500">Upcoming Video Calls</div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-full bg-pink-600 bg-opacity-75 text-white">
+                    <FaChartBar size={24} />
+                  </div>
+                  <div className="ml-5">
+                    <h4 className="text-2xl font-semibold text-gray-700">5</h4>
+                    <div className="text-gray-500">New Reports</div>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* 
+            This is for Admin */}
+  
+              <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-full bg-orange-600 bg-opacity-75 text-white">
+                    <FaGamepad size={24} />
+                  </div>
+                  <div className="ml-5">
+                    <h4 className="text-2xl font-semibold text-gray-700">15</h4>
+                    <div className="text-gray-500">Games</div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-full bg-green-600 bg-opacity-75 text-white">
+                    <FaBookBookmark size={24} />
+                  </div>
+                  <div className="ml-5">
+                    <h4 className="text-2xl font-semibold text-gray-700">150</h4>
+                    <div className="text-gray-500">Books</div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-full bg-blue-600 bg-opacity-75 text-white">
+                    <FaVideo size={24} />
+                  </div>
+                  <div className="ml-5">
+                    <h4 className="text-2xl font-semibold text-gray-700">300</h4>
+                    <div className="text-gray-500">Tautoriols</div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+  
+        {/* Additional content can be added here */}
+      </div>
+    );
+  };
+  
+  export default Home;
+  
