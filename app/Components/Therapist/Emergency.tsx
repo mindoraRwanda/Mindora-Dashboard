@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
+const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime);
+    return date.toLocaleString('en-US', {
+        weekday: 'short', // Day of the week (e.g., Mon, Tue)
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+};
+
 const EmergencyPage = () => {
     const [alertVisible, setAlertVisible] = useState(false);
     const [emergencies, setEmergencies] = useState([]);
@@ -8,6 +21,7 @@ const EmergencyPage = () => {
     const [selectedEmergency, setSelectedEmergency] = useState(null);
     const [responseMessage, setResponseMessage] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [respondedMessages, setRespondedMessages] = useState([]);
 
     useEffect(() => {
         // Replace with your WebSocket server URL
@@ -15,8 +29,20 @@ const EmergencyPage = () => {
 
         // Listen for incoming emergency notifications
         socket.on('newEmergency', (emergency) => {
-            setNewEmergency(emergency);
-            setEmergencies((prevEmergencies) => [emergency, ...prevEmergencies]);
+            const receivedAt = new Date().toISOString();
+            setNewEmergency({
+                ...emergency,
+                receivedAt,
+                status: 'Unread' // Set status to Unread for new emergencies
+            });
+            setEmergencies((prevEmergencies) => [
+                {
+                    ...emergency,
+                    receivedAt,
+                    status: 'Unread' // Set status to Unread for new emergencies
+                },
+                ...prevEmergencies
+            ]);
 
             // Show alert notification
             setAlertVisible(true);
@@ -36,24 +62,38 @@ const EmergencyPage = () => {
     // Add some default emergency messages
     useEffect(() => {
         const defaultEmergencies = [
-            { id: 1, patientName: 'John Doe', date: '2024-08-16', message: 'Feeling overwhelmed, need help!' },
-            { id: 2, patientName: 'Jane Smith', date: '2024-08-15', message: 'Experiencing a panic attack.' },
-            { id: 3, patientName: 'Mark Johnson', date: '2024-08-14', message: 'Need to talk ASAP.' },
+            { id: 1, patientName: 'John Doe', date: '2024-08-16', message: 'Feeling overwhelmed, need help!', contact: 'john.doe@example.com', sentAt: '2024-08-16T10:00:00Z', receivedAt: '2024-08-16T10:05:00Z', status: 'Unread' },
+            { id: 2, patientName: 'Jane Smith', date: '2024-08-15', message: 'Experiencing a panic attack.', contact: 'jane.smith@example.com', sentAt: '2024-08-15T11:00:00Z', receivedAt: '2024-08-15T11:10:00Z', status: 'Unread' },
+            { id: 3, patientName: 'Mark Johnson', date: '2024-08-14', message: 'Need to talk ASAP.', contact: 'mark.johnson@example.com', sentAt: '2024-08-14T09:00:00Z', receivedAt: '2024-08-14T09:15:00Z', status: 'Unread' },
         ];
 
         setEmergencies(defaultEmergencies);
     }, []);
 
     const handlePatientClick = (emergency) => {
+        // Update the status to "Read" when an emergency is selected
+        setEmergencies((prevEmergencies) =>
+            prevEmergencies.map((em) =>
+                em.id === emergency.id ? { ...em, status: 'Read' } : em
+            )
+        );
         setSelectedEmergency(emergency);
         setIsModalOpen(true);
     };
 
     const handleSendResponse = () => {
-        // Here you would send the response back to the patient
-        console.log(`Responding to ${selectedEmergency.patientName}: ${responseMessage}`);
-        setIsModalOpen(false);
-        setResponseMessage('');
+        if (selectedEmergency) {
+            const respondedMessage = {
+                ...selectedEmergency,
+                response: responseMessage,
+                responseDate: new Date().toISOString(),
+                status: 'Unread' // Set status to Unread initially, will be updated when read by the patient
+            };
+
+            setRespondedMessages((prevMessages) => [respondedMessage, ...prevMessages]);
+            setIsModalOpen(false);
+            setResponseMessage('');
+        }
     };
 
     return (
@@ -77,18 +117,61 @@ const EmergencyPage = () => {
                                 <th className="py-3 px-6 text-left">Patient Name</th>
                                 <th className="py-3 px-6 text-left">Date</th>
                                 <th className="py-3 px-6 text-left">Message</th>
+                                <th className="py-3 px-6 text-left">Contact</th>
+                                <th className="py-3 px-6 text-left">Sent At</th>
+                                <th className="py-3 px-6 text-left">Received At</th>
+                                <th className="py-3 px-6 text-left">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {emergencies.map((emergency) => (
                                 <tr
                                     key={emergency.id}
-                                    className="border-t cursor-pointer hover:bg-gray-100"
+                                    className={`border-t cursor-pointer hover:bg-gray-100 ${emergency.status === 'Unread' ? 'bg-yellow-50' : ''}`}
                                     onClick={() => handlePatientClick(emergency)}
                                 >
                                     <td className="py-3 px-6">{emergency.patientName}</td>
                                     <td className="py-3 px-6">{emergency.date}</td>
                                     <td className="py-3 px-6">{emergency.message}</td>
+                                    <td className="py-3 px-6">{emergency.contact}</td>
+                                    <td className="py-3 px-6">{formatDateTime(emergency.sentAt)}</td>
+                                    <td className="py-3 px-6">{formatDateTime(emergency.receivedAt)}</td>
+                                    <td className="py-3 px-6 font-semibold">{emergency.status}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            {/* Responded Messages Table */}
+            <section className="mb-8">
+                <h2 className="text-2xl font-semibold mb-4">Messages Responded by Therapist</h2>
+                <div className="bg-white shadow-md rounded-lg overflow-hidden">
+                    <table className="min-w-full bg-white">
+                        <thead className="bg-gray-200">
+                            <tr>
+                                <th className="py-3 px-6 text-left">Patient Name</th>
+                                <th className="py-3 px-6 text-left">Date</th>
+                                <th className="py-3 px-6 text-left">Message</th>
+                                <th className="py-3 px-6 text-left">Response</th>
+                                <th className="py-3 px-6 text-left">Response Date</th>
+                                <th className="py-3 px-6 text-left">Sent At</th>
+                                <th className="py-3 px-6 text-left">Received At</th>
+                                <th className="py-3 px-6 text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {respondedMessages.map((message) => (
+                                <tr key={message.id} className="border-t">
+                                    <td className="py-3 px-6">{message.patientName}</td>
+                                    <td className="py-3 px-6">{message.date}</td>
+                                    <td className="py-3 px-6">{message.message}</td>
+                                    <td className="py-3 px-6">{message.response}</td>
+                                    <td className="py-3 px-6">{formatDateTime(message.responseDate)}</td>
+                                    <td className="py-3 px-6">{formatDateTime(message.sentAt)}</td>
+                                    <td className="py-3 px-6">{formatDateTime(message.receivedAt)}</td>
+                                    <td className="py-3 px-6 font-semibold">{message.status}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -158,7 +241,7 @@ const EmergencyPage = () => {
                                 Cancel
                             </button>
                             <button
-                                className="bg-purple-600  text-white px-4 py-2 rounded hover:bg-purple-800"
+                                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-800"
                                 onClick={handleSendResponse}
                             >
                                 Send Response
