@@ -22,7 +22,7 @@ import Data_Security from "../Components/Admin/Data_Security";
 import DataBackup from "../Components/Admin/Data_Backup";
 import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
-import Settings from "../Components/Admin/Settings";
+import Settings from "../Components/Therapist/Settings";
 import PatientsList from '../Components/PatientsList';
 import AdminPatientsList from '../Components/Admin/AdminPatientsList';
 import PatientMessages from '../Components/PatientMessages';
