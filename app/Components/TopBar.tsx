@@ -5,11 +5,13 @@ import { MdOutlineMessage, MdNotificationsNone } from "react-icons/md";
 import { IoCalendarNumber } from "react-icons/io5";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import { useTranslation } from 'react-i18next';
+import TranslationProvider from "../dashboard/translationProvider";
 
 export default function TopBar({ userRole, items = [], onSearch }) {
-  
+  const { t, i18n } = useTranslation(); 
   const [filteredItems, setFilteredItems] = useState(items);
-  const [calendarModal,setCalendarModal]=useState(false);
+  const [calendarModal, setCalendarModal] = useState(false);
   const [value, onChange] = useState(new Date());
 
   useEffect(() => {
@@ -20,40 +22,47 @@ export default function TopBar({ userRole, items = [], onSearch }) {
   const handleLogout = () => {
     router.push("/");
   };
-const handleModal=()=>{
-  setCalendarModal(true);
-};
+  
+  const handleModal = () => {
+    setCalendarModal(true);
+  };
 
-const handleCancel=()=>{
-  setCalendarModal(false);
-};
-
- 
+  const handleCancel = () => {
+    setCalendarModal(false);
+  };
+  const handleLanguageChange = (e) => {
+    const selectedLanguage = e.target.value;
+    i18n.changeLanguage(selectedLanguage).then(() => {
+      setFilteredItems([...filteredItems]); // Force re-render by updating state
+    });
+  };
+  
+  
 
   return (
     <header className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-purple-600">
-          {userRole === "therapist" ? "Therapist Dashboard" : "Admin Dashboard"}
+          {userRole === "therapist" ? t('therapist_dashboard') : t('admin_dashboard')}
         </h1>
 
         <div className="flex gap-1">
-          
           <div className="text-gray-600 text-xl">
             <select
               id="languageSelect"
               className="form-select p-1 rounded border-2 border-gray-100"
               aria-label="Default select example"
+              onChange={handleLanguageChange} 
             >
-              <option>English</option>
-              <option>French</option>
-              <option>Kinyarwanda</option>
+              <option value="en">English</option>
+              <option value="kin">Kinyarwanda</option>
             </select>
           </div>
 
           <div className="flex items-center">
-          
-          <button className=" text-purple-600 mx-3" onClick={handleModal}><IoCalendarNumber size={32}/></button>
+            <button className="text-purple-600 mx-3" onClick={handleModal}>
+              <IoCalendarNumber size={32} />
+            </button>
             <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
               <MdOutlineMessage className="text-3xl ml-5 text-purple-600" />
             </a>
@@ -66,16 +75,16 @@ const handleCancel=()=>{
               onClick={handleLogout}
               className="ml-5 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md hover:shadow-lg transition duration-200"
             >
-              Logout
+        {t('logout')}
             </button>
           </div>
         </div>
       </div>
-    <Modal title="Calendar" footer={null} visible={calendarModal} onCancel={handleCancel} className="text-center">
-   <div className="flex justify-center">
-   <Calendar onChange={onChange} value={value} />
-   </div>
-    </Modal>
+      <Modal title="Calendar" footer={null} visible={calendarModal} onCancel={handleCancel} className="text-center">
+        <div className="flex justify-center">
+          <Calendar onChange={onChange} value={value} />
+        </div>
+      </Modal>
     </header>
   );
 }

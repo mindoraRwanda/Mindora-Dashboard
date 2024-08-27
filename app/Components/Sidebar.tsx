@@ -263,9 +263,9 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
                     <p className="flex"><LuDot className="m-1" /> User details</p>
                   </a>
                  
-                  <a onClick={() => setActiveComponent("feedback")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                  {/* <a onClick={() => setActiveComponent("feedback")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> User Feedback</p>
-                  </a>
+                  </a> */}
                   <a onClick={() => setActiveComponent("engagement")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> User Engagement</p>
                   </a>

@@ -16,6 +16,9 @@ import { MdAddCircle } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { Form, Image, Input, Modal } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from 'next-intl';
+
+
 
 Chart.register(DoughnutController, ArcElement, Legend, Tooltip);
 
@@ -43,13 +46,22 @@ const list = [
 ];
 
 const Home = ({ userRole }) => {
-  const [visible,setVisible]=useState(false);
+  // const { t } = useTranslation();
+
+  const [visible, setVisible] = useState(false);
   const chartRef = useRef(null);
   const chartRefUser = useRef(null);
   const chartIns = useRef(null);
   const chartInsTherapy = useRef(null);
   const chartPat = useRef(null);
   const chartInsPat = useRef(null);
+  const [upcomingMeetings, setUpcomingMeetings] = useState([
+    { name: "Muvunyi Patrick:: Boy Mental therapy", time: "Today at:2:00 - 3:00", link: "@ meet.google.mxz" },
+    { name: " Uwampeta Alice::Family therapy", time: "Tomorrow at:17:00 - 19:00", link: "@ meet.google.mxz" }
+  ]);
+  const [formData, setFormData] = useState({ name: "", phone: "", time: "", link: "", role: "" });
+
+
 
   useEffect(() => {
     if (chartIns.current) {
@@ -114,7 +126,28 @@ const Home = ({ userRole }) => {
     }
   });
 
-  // this is for modal
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  
+
+  const handleSend = () => {
+    if (formData.name && formData.time && formData.link) {
+      const newMeeting = {
+        name: `${formData.name}:: ${formData.role}`,
+        phone:formData.phone,
+        time: formData.time,
+        link: formData.link,
+      };
+      setUpcomingMeetings([...upcomingMeetings, newMeeting]);
+      setFormData({ name: "", phone: "", time: "", link: "", role: "" }); // Reset form data
+      setVisible(false); // Close the modal
+    } else {
+      console.log("Please fill out all fields");
+    }
+  };
+ 
 
   const handleModal=()=>{
     setVisible(true);
@@ -125,7 +158,7 @@ const hanleCancelModal=()=>{
   return (
     <div className="container mx-auto px-6 py-8">
       <h3 className="text-gray-700 text-3xl font-medium mb-6">
-        Welcome back, {userRole === "therapist" ? "Dr. Smith" : "Admin"}!
+       Welcome back, {userRole === "therapist" ? "Dr. Smith" : "Admin"}!
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -225,7 +258,6 @@ const hanleCancelModal=()=>{
         )}
       </div>
 
-      {/* Move Recent Events and Upcoming Events to below the other content */}
       {userRole === "admin" && (
               <div className="flex gap-7 mt-8">
                 <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1  w-3/5">
@@ -264,43 +296,46 @@ const hanleCancelModal=()=>{
                 </div>
                 <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-2/5">
                   <h4 className="text-2xl font-semibold text-purple-600 mb-4">Upcoming Meetings</h4>
-                 <div className="text-black border border-gray-300 m-5 p-2 rounded">
-                  <strong>Boy Mental therapy:: Placide</strong><br />
-                  <p className="leading-3 capitalize my-2">To day at:2:00 - 3:00</p>
-                  <p className="leading-3 capitalize my-2">@ meet.google.mxz</p>
-                 </div>
-                 <div className="text-black border border-gray-300 m-5 p-2 rounded">
-                  <strong>Family therapy:: Alice</strong><br />
-                  <p className="leading-3 capitalize my-2">Tomorrow at:17:00 - 19:00</p>
-                  <p className="leading-3 capitalize my-2">@ meet.google.mxz</p>
-                 </div>
+                  {upcomingMeetings.map((meeting, index) => (
+        <div key={index} className="text-black border border-gray-300 m-5 p-2 rounded">
+          <h4 className="font-semibold mt-3">{meeting.name}</h4>
+          <p className="leading-3 capitalize my-2">{meeting.phone}</p>
+          <p className="leading-3 capitalize my-2">{meeting.time}</p>
+          <p className="leading-3 capitalize my-2">{meeting.link}</p>
+        </div>
+      ))}
                  <button className="text-white bg-purple-600 border border-gray-300 rounded px-3 mr-4 py-1 flex float-right" onClick={handleModal}><MdAddCircle size={24}/>Add</button>
                 </div>
 
-               
                 <Modal title="Add the Upcoming Event" visible={visible} onCancel={hanleCancelModal} footer={null}>
-                
-                  <Form>
-                    <FormItem name="Name" label="Name:" rules={[{required:true}]}>
-                      <Input placeholder="Enter name"/>
-                    </FormItem><br />
-               
-                    <FormItem name="Phone No:" label="Phone" rules={[{required:true}]}>
-                      <Input placeholder="Enter phone number"/>
-                    </FormItem><br />
-                   
-                    <FormItem name="Time" label="Time:" rules={[{required:true}]}>
-                      <Input placeholder="Enter Time it will occur"/>
-                    </FormItem><br />
+            <Form>
+                <FormItem name="Name" label="Name:" rules={[{ required: true }]}>
+                    <Input placeholder="Enter name" name="name" value={formData.name} onChange={handleInputChange} />
+                </FormItem><br />
 
-                    <FormItem name="Link" label="Link:" rules={[{required:true}]}>
-                      <Input placeholder="Enter Link will be Used "/>
-                    </FormItem><br />
-                    </Form>
-                    <div className="flex justify-center mt-4">
-                    <button className="text-white bg-purple-600 border border-gray-300 px-2 py-1 rounded items-center flex"><MdAddCircle size={24}/>Add</button>
-                    </div>
-                    </Modal>
+                <FormItem name="role" label="Role" rules={[{ required: true }]}>
+                    <Input placeholder="Enter Role" name="role" value={formData.role} onChange={handleInputChange} />
+                </FormItem><br />
+
+                <FormItem name="Phone No:" label="Phone" rules={[{ required: true }]}>
+                    <Input placeholder="Enter phone number" name="phone" value={formData.phone} onChange={handleInputChange} />
+                </FormItem><br />
+
+                <FormItem name="Time" label="Time:" rules={[{ required: true }]}>
+                    <Input placeholder="Enter Time it will occur" name="time" value={formData.time} onChange={handleInputChange} />
+                </FormItem><br />
+
+                <FormItem name="Link" label="Link:" rules={[{ required: true }]}>
+                    <Input placeholder="Enter Link will be Used " name="link" value={formData.link} onChange={handleInputChange} />
+                </FormItem><br />
+            </Form>
+            <div className="flex justify-center mt-4">
+                <button className="text-white bg-purple-600 border border-gray-300 px-2 py-1 rounded items-center flex" onClick={handleSend}>
+                    <MdAddCircle size={24}/>Send
+                </button>
+            </div>
+        </Modal>
+
               </div>
               
             )}

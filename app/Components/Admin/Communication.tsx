@@ -2,6 +2,7 @@ import { MdDelete,MdEdit,MdCheck } from "react-icons/md";
 import { IoMdArchive } from "react-icons/io";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { useState, useEffect, useRef } from "react";
+import { Image } from "antd";
 
 export default function Communication() {
   const Users = [
@@ -50,10 +51,20 @@ export default function Communication() {
       <h4 className="text-purple-600 text-2xl font-semibold my-4">
         Community Management
       </h4>
+      <div className="flex gap-10">
+        <div className="p-3 border-2 border-gray-400 rounded-md">
+          <Image src="/Images/beauty1.jpg" alt="com" width={100} height={100} className="rounded-full ml-5"/><br />
+          <p className="text-black text-xl font-semibold"> Therapists Group</p>
+        </div>
+        <div className="p-3 border-2 border-gray-400 rounded-md">
+          <Image src="/Images/beauty9.jpg" alt="com" width={100} height={100} className="rounded-full ml-3"/><br />
+          <p className="text-black text-xl font-semibold"> Users Group</p>
+        </div>
+      </div>
       <div className="flex gap-3 mt-3 ">
         <div className="w-2/5 border-2 border-gray-300 rounded-lg bg-white">
           <h3 className="text-purple-600 font-semibold mx-4 my-2 text-xl">
-            Community Messages
+             Therapist Community Messages
           </h3>
           <hr className="text-black border border-gray-400" />
           <table className="min-w-full">
@@ -92,7 +103,7 @@ export default function Communication() {
             <textarea
               name="messages"
               id="messages"
-              cols="62"
+              cols="53"
               rows="2"
               placeholder="Text Announcement here"
               className="border border-slate-400 mx-2 mt-4 p-2 text-black bg-gray-200 rounded-lg"
