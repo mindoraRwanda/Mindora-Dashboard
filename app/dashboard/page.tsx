@@ -41,6 +41,8 @@ import Emergency from '../Components/Therapist/Emergency';
 import EducationResource from '@/app/Components/Therapist/EducationResources';
 import Invoice from '@/app/Components/Therapist/Invoice';
 import Chat from '../Components/Therapist/Chat';
+import NotificationsPage from '../Components/Therapist/Notification';
+import SendNotificationPage from '../Components/Therapist/SendNotification';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -53,6 +55,10 @@ export default function DashboardPage() {
 
   const renderComponent = () => {
     switch (activeComponent) {
+      case 'sendNot':
+        return <SendNotificationPage />
+      case 'Notification':
+        return <NotificationsPage />
       case 'Emegency':
         return < Emergency/>
       case 'patients feedback':

@@ -49,7 +49,7 @@ const EducationSource = () => {
       chartIns.current = new Chart(ctx, {
         type: "doughnut",
         data: {
-          labels: ["Female[70]", "Male[10]"],
+          labels: ["Completed[70]", "Task remained[10]"],
           datasets: [
             {
               data: [70, 10],
@@ -72,7 +72,7 @@ const EducationSource = () => {
       chartInsTherapy.current = new Chart(ctx, {
         type: "doughnut",
         data: {
-          labels: ["Female[50]", "Male[30]"],
+          labels: ["Courses[50]", "Completed[30]"],
           datasets: [
             {
               data: [50, 30],

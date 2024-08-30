@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export default function Chat() {
   const [input, setInput] = useState('');
@@ -9,12 +10,12 @@ export default function Chat() {
 
   // Dummy data for followers and collaborators with profile photos
   const users = [
-    { name: 'John Doe', photo: '/app/Components/Therapist/images/images.jpeg', role: 'Follower' },
-    { name: 'Jane Smith', photo: '/app/Components/Therapist/images/images.jpeg', role: 'Follower' },
-    { name: 'Alice Johnson', photo: '/app/Components/Therapist/images/images.jpeg', role: 'Follower' },
-    { name: 'Bob Brown', photo: '/app/Components/Therapist/images/images.jpeg', role: 'Collaborator' },
-    { name: 'Emily Davis', photo: '/app/Components/Therapist/images/images.jpeg', role: 'Collaborator' },
-    { name: 'Michael Wilson', photo: '/app/Components/Therapist/images/images.jpeg', role: 'Collaborator' },
+    { name: 'John Doe', photo: './images/profile.jpeg', role: 'Follower' },
+    { name: 'Jane Smith', photo: './images/images.jpeg', role: 'Follower' },
+    { name: 'Alice Johnson', photo: './images/imag3.jpeg', role: 'Follower' },
+    { name: 'Bob Brown', photo: './images/imag1.jpeg', role: 'Collaborator' },
+    { name: 'Emily Davis', photo: './images/imag3.jpeg', role: 'Collaborator' },
+    { name: 'Michael Wilson', photo: './images/images.jpeg', role: 'Collaborator' },
   ];
 
   const sendMessage = () => {
