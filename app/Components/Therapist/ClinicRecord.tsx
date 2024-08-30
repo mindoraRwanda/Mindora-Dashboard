@@ -92,7 +92,7 @@ const MyForm = () => {
               Next Appointment Date:
             </label>
             <input
-              type="text"
+              type="date"
               id="AppointmentDate"
               name="AppointmentDate"
               value={formData.AppointmentDate}
@@ -107,7 +107,7 @@ const MyForm = () => {
               Next Treatment Plan Review Date:
             </label>
             <input
-              type="text"
+              type="date"
               id="TreatmentPlanReview"
               name="TreatmentPlanReview"
               value={formData.TreatmentPlanReview}

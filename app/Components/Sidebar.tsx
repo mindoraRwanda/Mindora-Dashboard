@@ -61,12 +61,6 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
         </a>
         {userRole === "therapist" ? (
           <>
-            <a
-              onClick={() => setActiveComponent("appointments")}
-              className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
-            >
-              <FaCalendarAlt className="mr-3" /> View Appointments
-            </a>
             {/* <a
               onClick={() => setActiveComponent("videoCall")}
               className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
@@ -217,13 +211,13 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               {openDropdown === "Notification" && (
                 <div className="ml-6">
                   <a
-                    onClick={() => setActiveComponent("SendNotification")}
+                    onClick={() => setActiveComponent("sendNot")}
                     className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
                   >
                     <p className="flex"><LuDot className="m-1" />Send Notification</p>
                   </a>
                   <a
-                    onClick={() => setActiveComponent("ViewNotification")}
+                    onClick={() => setActiveComponent("Notification")}
                     className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
                   >
                     <p className="flex"><LuDot className="m-1 text-sm" /> View Notification</p>

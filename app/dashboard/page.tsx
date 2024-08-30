@@ -22,7 +22,7 @@ import Data_Security from "../Components/Admin/Data_Security";
 import DataBackup from "../Components/Admin/Data_Backup";
 import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
-import Settings from "../Components/Admin/Settings";
+import Settings from "../Components/Therapist/Settings";
 import PatientsList from '../Components/PatientsList';
 import AdminPatientsList from '../Components/Admin/AdminPatientsList';
 import PatientMessages from '../Components/PatientMessages';
@@ -41,6 +41,8 @@ import Emergency from '../Components/Therapist/Emergency';
 import EducationResource from '@/app/Components/Therapist/EducationResources';
 import Invoice from '@/app/Components/Therapist/Invoice';
 import Chat from '../Components/Therapist/Chat';
+import NotificationsPage from '../Components/Therapist/Notification';
+import SendNotificationPage from '../Components/Therapist/SendNotification';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -53,6 +55,10 @@ export default function DashboardPage() {
 
   const renderComponent = () => {
     switch (activeComponent) {
+      case 'sendNot':
+        return <SendNotificationPage />
+      case 'Notification':
+        return <NotificationsPage />
       case 'Emegency':
         return < Emergency/>
       case 'patients feedback':

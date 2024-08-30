@@ -22,6 +22,7 @@ import {
 } from "chart.js";
 import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
+import { BsFillCalendar2EventFill } from "react-icons/bs";
 
 // Ensure Modal is set up for client-side rendering
 if (typeof window !== "undefined") {
@@ -232,6 +233,17 @@ const Home = ({ userRole }: { userRole: string }) => {
                 </div>
               </div>
             </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-red-600 bg-opacity-75 text-white">
+                  <BsFillCalendar2EventFill size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">2:30 pm</h4>
+                  <div className="text-gray-500">Upcoming event</div>
+                </div>
+              </div>
+            </div>
           </>
         ) : (
           <>
@@ -276,7 +288,7 @@ const Home = ({ userRole }: { userRole: string }) => {
           <canvas ref={barChartRef} />
         </div>
         <div className="bg-white rounded-lg shadow-xl p-6">
-          <h3 className="text-xl text-gray-500 font-semibold mb-4">Line Chart</h3>
+          <h3 className="text-xl text-gray-500 font-semibold mb-4">Tasks solved</h3>
           <canvas ref={lineChartRef} />
         </div>
       </div>
