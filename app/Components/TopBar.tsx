@@ -42,12 +42,12 @@ export default function TopBar({ userRole, items = [], onSearch }) {
   return (
     <header className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-purple-600">
+        <h1 className=" lg:text-2xl font-semibold text-purple-600 sm:text-sm md:text-sm">
           {userRole === "therapist" ? t('therapist_dashboard') : t('admin_dashboard')}
         </h1>
 
         <div className="flex gap-1">
-          <div className="text-gray-600 text-xl">
+          <div className="text-gray-600 text-xl md:hidden sm:hidden">
             <select
               id="languageSelect"
               className="form-select p-1 rounded border-2 border-gray-100"

@@ -235,20 +235,21 @@ const hanleCancelModal=()=>{
             </div>
 
             <div className="flex gap-7 mt-4">
-              <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl hover:-translate-y-1 transform cursor-pointer duration-300 float-start h-fit pb-2">
-                <p className="text-black font-semibold text-2xl text-center my-3">
+              <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl
+                md:w-52 lg:w-full hover:-translate-y-1 transform cursor-pointer duration-300 float-start h-fit pb-2">
+                <p className="text-black font-semibold md:text-md text-2xl text-center my-3">
                   User Categories
                 </p>
                 <canvas ref={chartRef}></canvas>
-              </div>
-              <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl hover:-translate-y-1 transform cursor-pointer duration-300 float-start h-fit pb-2">
-                <p className="text-black font-semibold text-2xl text-center my-3">
+              </div> 
+              <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl hover:-translate-y-1 transform cursor-pointer duration-300 float-start h-fit pb-2 md:w-52 lg:w-full">
+                <p className="text-black font-semibold md:text-md text-2xl text-center my-3">
                   Therapy Categories
                 </p>
                 <canvas ref={chartIns}></canvas>
               </div>
-              <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl hover:-translate-y-1 transform cursor-pointer duration-300 float-start h-fit pb-2">
-                <p className="text-black font-semibold text-2xl text-center my-3">
+              <div className="border px-11 border-gray-400 bg-white rounded-xl hover:shadow-2xl hover:-translate-y-1 transform cursor-pointer duration-300 float-start h-fit pb-2 md:w-52 lg:w-full">
+                <p className="text-black font-semibold md:text-md text-2xl text-center my-3">
                   Patient Categories
                 </p>
                 <canvas ref={chartPat}></canvas>
@@ -260,41 +261,34 @@ const hanleCancelModal=()=>{
 
       {userRole === "admin" && (
               <div className="flex gap-7 mt-8">
-                <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1  w-3/5">
-                  <h4 className="text-2xl font-semibold text-purple-600 mb-4">Recent Convesations</h4>
-                 <table className="min-w-full">
-                  <thead>
-                    <tr className="gap-5">
-                      <th className="text-black capitalize text-xs leading-5 text-left border-b-2 border-gray-300 px-5 py-2 ">name</th>
-                      <th className="text-black capitalize text-xs leading-5 text-left border-b-2 border-gray-300 px-5 py-2"> Role</th>
-                      <th className="text-black capitalize text-xs leading-5 text-left border-b-2 border-gray-300 px-5 py-2">recent date  </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {list.map((list)=>(
-                    <tr key={list.id}>
-                       <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 font-medium text-gray-900">
-                  {list.name}
+                <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-3/5 md:w-1/2">
+                  <h4 className="text-2xl font-semibold text-purple-600 mb-4 md:text-md">Recent Convesations</h4>
+                  <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-200">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Name</th>
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Role</th>
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Phone</th>
+                
+                  <th className="py-2 px-4 border-b text-left text-sm font-semibold text-gray-700">Last Meet</th>
+                </tr>
+              </thead>
+              <tbody>
+                {list.map((user) => (
+                  <tr key={user.id}>
+                    <td className="py-2 px-4 border-b text-sm text-gray-700">{user.name}</td>
+                    <td className="py-2 px-4 border-b text-sm text-gray-700">{user.role}</td>
+                    <td className="py-2 px-4 border-b text-sm text-gray-700">{user.phone}</td>
+                    
+                    <td className="py-2 px-4 border-b text-sm text-gray-700">{user.lastmeet}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
                 </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 font-medium text-gray-900">
-                  {list.role}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                <div className="text-sm leading-5 font-medium text-gray-900">
-                  {list.lastmeet}
-                </div>
-              </td> </tr>
-                  )
-
-                  )}
-                  </tbody>
-                 </table>
-                </div>
-                <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-2/5">
+                <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-2/5 md:w-1/2">
                   <h4 className="text-2xl font-semibold text-purple-600 mb-4">Upcoming Meetings</h4>
                   {upcomingMeetings.map((meeting, index) => (
         <div key={index} className="text-black border border-gray-300 m-5 p-2 rounded">
@@ -350,6 +344,7 @@ const hanleCancelModal=()=>{
                     <thead >
                       <tr className="gap-5 border-b-2 border-gray-300 px-5 py-2">
                         <th className="text-black capitalize text-xs leading-5 text-left  ">Patient Name</th>
+                        <th className="text-black capitalize text-xs leading-5 text-left  ">Payed Date</th>
                         <th className="text-black capitalize text-xs leading-5 text-left px-5 py-2 flex float-right">Amount Payed</th>
                       </tr>
                     </thead>
@@ -359,6 +354,11 @@ const hanleCancelModal=()=>{
                 <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 font-medium text-gray-900">
                   {list.name}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="text-sm leading-5 font-medium text-gray-900">
+                  {list.lastmeet}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
@@ -376,29 +376,29 @@ const hanleCancelModal=()=>{
                     <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 w-2/6 ">
                     <h4 className="text-2xl font-semibold text-purple-600 mb-4">Payment System</h4>
                     <div className="border border-gray-300 rounded">
-                      <div className="flex">
+                    
                       <div>
-                      <Image src="/Images/momo.jpg" alt="momo" width={70} height={73} className="rounded"/>
+                      <Image src="/Images/momo.jpg" alt="momo" height={80} className="rounded m-2"/>
                       </div>
                       <div>
-                      <p className="px-2 text-xl text-black m-1">Payed with Mobile Money</p>
-                      <p className="text-black text-xl font-semibold ml-2">+25 0789897235</p>
+                      <p className="px-2 text-2xl text-black m-1">Payed with Mobile Money</p>
+                      <p className="text-black text-md font-semibold ml-2">+25 0789897235</p>
                       </div>
-                      </div>
-                      <strong className="text-black text-md font-sans text-center"> Total Amount: $100</strong>
+                  
+                      <strong className="text-black text-md font-sans ml-2"> Total Amount: $100</strong>
                     </div>
                   
                     <div className="border border-gray-300 rounded mt-8">
-                      <div className="flex">
+                     
                       <div>
-                      <Image src="/Images/paypal.png" alt="paypal" width={70} height={73} className="rounded"/>
+                      <Image src="/Images/paypal.png" height={70} alt="paypal" className="rounded m-2"/>
                       </div>
                       <div>
-                      <p className="px-2 text-xl text-black m-1">Payed with PayPal</p>
-                      <p className="text-black text-xl font-semibold ml-2">1122363674674376</p>
+                      <p className="px-2 text-2xl text-black m-1">Payed with PayPal</p>
+                      <p className="text-black text-md font-semibold ml-2">1122363674674376</p>
                       </div>
-                      </div>
-                      <strong className="text-black text-md font-sans text-center"> Total Amount: $50</strong>
+                    
+                      <strong className="text-black text-md font-sans ml-2"> Total Amount: $50</strong>
                     </div>
                     </div>
                     </div>
