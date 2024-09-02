@@ -1,0 +1,332 @@
+import {
+  FaCalendarAlt,
+  FaVideo,
+  FaChartBar,
+  FaUserMd,
+  FaUsers,
+  FaExclamationTriangle,
+} from "react-icons/fa";
+import {
+  Chart,
+  DoughnutController,
+  BarController,
+  LineController,
+  BarElement,
+  PointElement,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  ArcElement,
+  Legend,
+  Tooltip,
+} from "chart.js";
+import { useEffect, useRef, useState } from "react";
+import Modal from "react-modal";
+import { BsFillCalendar2EventFill } from "react-icons/bs";
+
+// Ensure Modal is set up for client-side rendering
+if (typeof window !== "undefined") {
+  Modal.setAppElement("body"); // You can set 'body' or omit this if not necessary
+}
+
+Chart.register(
+  DoughnutController,
+  BarController,
+  LineController,
+  BarElement,
+  PointElement,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  ArcElement,
+  Legend,
+  Tooltip
+);
+
+const Home = ({ userRole }: { userRole: string }) => {
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
+  const chartRefTherapy = useRef<HTMLCanvasElement | null>(null);
+  const barChartRef = useRef<HTMLCanvasElement | null>(null);
+  const lineChartRef = useRef<HTMLCanvasElement | null>(null);
+
+  const chartIns = useRef<Chart | null>(null);
+  const chartInsTherapy = useRef<Chart | null>(null);
+  const barChartIns = useRef<Chart | null>(null);
+  const lineChartIns = useRef<Chart | null>(null);
+
+  const [notifications, setNotifications] = useState([
+    { id: 1, title: "Emergency: John Doe", message: "Patient experiencing severe anxiety.", time: "2 mins ago" },
+    { id: 2, title: "Emergency: Jane Smith", message: "Patient having panic attack.", time: "5 mins ago" },
+    { id: 3, title: "Emergency: Alice Johnson", message: "Patient feeling suicidal.", time: "10 mins ago" },
+  ]);
+
+  const [selectedNotification, setSelectedNotification] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (notification: any) => {
+    setSelectedNotification(notification);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedNotification(null);
+  };
+
+  useEffect(() => {
+    if (chartRef.current) {
+      const ctx = chartRef.current.getContext("2d");
+      if (ctx) {
+        if (chartIns.current) {
+          chartIns.current.destroy();
+        }
+
+        chartIns.current = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Female[70]", "Male[10]"],
+            datasets: [
+              {
+                data: [70, 10],
+                backgroundColor: ["#FBA834", "#387ADF"],
+              },
+            ],
+          },
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (chartRefTherapy.current) {
+      const ctx = chartRefTherapy.current.getContext("2d");
+      if (ctx) {
+        if (chartInsTherapy.current) {
+          chartInsTherapy.current.destroy();
+        }
+
+        chartInsTherapy.current = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Female[50]", "Male[30]"],
+            datasets: [
+              {
+                data: [50, 30],
+                backgroundColor: ["#41B06E", "#F7C04A"],
+              },
+            ],
+          },
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (barChartRef.current) {
+      const ctx = barChartRef.current.getContext("2d");
+      if (ctx) {
+        if (barChartIns.current) {
+          barChartIns.current.destroy();
+        }
+
+        barChartIns.current = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June"],
+            datasets: [
+              {
+                label: "User Growth",
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: "#4A90E2",
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (lineChartRef.current) {
+      const ctx = lineChartRef.current.getContext("2d");
+      if (ctx) {
+        if (lineChartIns.current) {
+          lineChartIns.current.destroy();
+        }
+
+        lineChartIns.current = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June"],
+            datasets: [
+              {
+                label: "Therapy Sessions",
+                data: [65, 59, 80, 81, 56, 55],
+                fill: false,
+                borderColor: "#36A2EB",
+                tension: 0.1,
+              },
+            ],
+          },
+        });
+      }
+    }
+  }, []);
+
+  return (
+    <div className="container mx-auto px-6 py-8">
+      <h3 className="text-gray-700 text-3xl font-medium mb-6">
+        Welcome back, {userRole === "therapist" ? "Dr. Smith" : "Admin"}!
+      </h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {userRole === "therapist" ? (
+          <>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-indigo-600 bg-opacity-75 text-white">
+                  <FaCalendarAlt size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">8</h4>
+                  <div className="text-gray-500">New Appointments</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-green-600 bg-opacity-75 text-white">
+                  <FaVideo size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">3</h4>
+                  <div className="text-gray-500">Upcoming Video Calls</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-pink-600 bg-opacity-75 text-white">
+                  <FaChartBar size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">5</h4>
+                  <div className="text-gray-500">New Reports</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-red-600 bg-opacity-75 text-white">
+                  <FaExclamationTriangle size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">3</h4>
+                  <div className="text-gray-500">Emergency Notifications</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-red-600 bg-opacity-75 text-white">
+                  <BsFillCalendar2EventFill size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">2:30 pm</h4>
+                  <div className="text-gray-500">Upcoming event</div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Admin View */}
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-orange-600 bg-opacity-75 text-white">
+                  <FaUserMd size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">15</h4>
+                  <div className="text-gray-500">Total Therapists</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center">
+                <div className="p-3 rounded-full bg-teal-600 bg-opacity-75 text-white">
+                  <FaUsers size={24} />
+                </div>
+                <div className="ml-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">200</h4>
+                  <div className="text-gray-500">Patients</div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white rounded-lg shadow-xl p-6">
+          <h3 className="text-xl text-gray-500 font-semibold mb-4">Appointed</h3>
+          <canvas ref={chartRef} />
+        </div>
+        <div className="bg-white rounded-lg shadow-xl p-6">
+          <h3 className="text-xl text-gray-500 font-semibold mb-4">Attended</h3>
+          <canvas ref={chartRefTherapy} />
+        </div>
+        <div className="bg-white rounded-lg shadow-xl p-6">
+          <h3 className="text-xl text-gray-500 font-semibold mb-4">Monthly report attendence view</h3>
+          <canvas ref={barChartRef} />
+        </div>
+        <div className="bg-white rounded-lg shadow-xl p-6">
+          <h3 className="text-xl text-gray-500 font-semibold mb-4">Tasks solved</h3>
+          <canvas ref={lineChartRef} />
+        </div>
+      </div>
+
+      <div className="mt-8 bg-white text-gray-500 rounded-lg shadow-xl p-6">
+        <h3 className="text-xl font-semibold mb-4">Emergency Notifications</h3>
+        <ul>
+          {notifications.map((notification) => (
+            <li
+              key={notification.id}
+              className="border-b border-gray-200 py-4 cursor-pointer"
+              onClick={() => openModal(notification)}
+            >
+              <div className="font-semibold text-gray-500">{notification.title}</div>
+              <div className="text-gray-500 text-sm">{notification.time}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Notification Modal"
+        className="bg-white p-8 rounded-md shadow-lg max-w-md mx-auto mt-20"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+      >
+        <h2 className="text-xl text-gray-700 font-bold mb-4">{selectedNotification?.title}</h2>
+        <p className="text-gray-500">{selectedNotification?.message}</p>
+        <button
+          onClick={closeModal}
+          className="mt-4 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+        >
+          Close
+        </button>
+      </Modal>
+    </div>
+  );
+};
+
+export default Home;

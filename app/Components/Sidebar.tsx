@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { BiClinic } from "react-icons/bi";
+
+
 import {
   FaCalendarAlt,
   FaVideo,
@@ -22,6 +24,8 @@ import {
   FaEdit,FaFileInvoice,FaResearchgate,FaTemperatureHigh,
 } from "react-icons/fa";
 import { FaBarsProgress, FaHouseMedicalCircleCheck, FaKitMedical, FaNotesMedical, FaRecordVinyl, FaRegFaceSurprise } from "react-icons/fa6";
+import { Chart, DoughnutController, ArcElement, Legend, Tooltip } from 'chart.js';
+
 
 import { GoChevronDown } from "react-icons/go";
 import { IoCaretDownSharp, IoPeople } from "react-icons/io5";
@@ -67,16 +71,14 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
         </a>
         {userRole === "therapist" ? (
           <>
-            <a
-              onClick={() => setActiveComponent("appointments")}
-              className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
-            >
-              <FaCalendarAlt className="mr-3" /> View Appointments
-            </a>
-            <a
+            {/* <a
               onClick={() => setActiveComponent("videoCall")}
               className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200"
-            >
+            > */}
+            <a onClick={() => setActiveComponent("appointments")} className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200">
+              <FaCalendarAlt className="mr-3" /> View Appointments
+            </a>
+            <a onClick={() => setActiveComponent("videoCall")} className="cursor-pointer flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200">
               <FaVideo className="mr-3" /> Make Video Call
             </a>
             <a
@@ -85,10 +87,11 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
             >
               <FaList className="mr-3" /> Patients List
             </a>
-            <a
+            {/* <a
               onClick={() => setActiveComponent('Messages')}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-            >
+            > */}
+            <a onClick={() => setActiveComponent('Messages')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <MdOutlineMessage className="mr-3" /> Patients Messages
             </a>
             <a
@@ -174,21 +177,24 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <FaEdit className="mr-3" /> Recording Patient
+              </a>
+            <a onClick={() => setActiveComponent('settings')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <MdOutlineSettings className="mr-3" /> Setting
             </a>
             <a
-              onClick={() => setActiveComponent('Record')}
+              onClick={() => setActiveComponent('education')}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <FaReadme className="mr-3" /> Education Resources
             </a>
             <a
-              onClick={() => setActiveComponent('Record')}
+              onClick={() => setActiveComponent('Chat')}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <FaRegFaceSurprise className="mr-3" /> Referral and Collaboration
             </a>
             <a
-              onClick={() => setActiveComponent('Record')}
+              onClick={() => setActiveComponent('invoice')}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <FaFileInvoice className="mr-3" /> Billing and Insurance
@@ -200,7 +206,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               <FaResearchgate className="mr-3" /> Patients Feedback
             </a>
             <a
-              onClick={() => setActiveComponent('emergency')}
+              onClick={() => setActiveComponent('Emegency')}
               className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
             >
               <FaTemperatureHigh className="mr-3" /> Emergency
@@ -215,20 +221,20 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
               {openDropdown === "Notification" && (
                 <div className="ml-6">
                   <a
-                    onClick={() => setActiveComponent("SendNotification")}
+                    onClick={() => setActiveComponent("sendNot")}
                     className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
                   >
                     <p className="flex"><LuDot className="m-1" />Send Notification</p>
                   </a>
                   <a
-                    onClick={() => setActiveComponent("ViewNotification")}
+                    onClick={() => setActiveComponent("Notification")}
                     className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
                   >
                     <p className="flex"><LuDot className="m-1 text-sm" /> View Notification</p>
                   </a>
                 </div>
               )}
-            </div>
+            </div> 
           </>
         ) : (
           <>

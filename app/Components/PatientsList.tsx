@@ -84,14 +84,14 @@ export default function UserList() {
     <div className="bg-white rounded-lg shadow-xl p-6">
       <h2 className="text-2xl font-semibold mb-4">Users</h2>
       <button
-        className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md"
+        className="mt-4 px-4 py-2 bg-gray-600 text-white rounded-md"
         onClick={handleAddClick}
       >
         Add New User
       </button>
       <table className="min-w-full mt-4">
         <thead>
-          <tr>
+          <tr className="bg-gray-200">
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Name
             </th>
@@ -108,7 +108,7 @@ export default function UserList() {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
+            <tr key={user.id} className="odd:bg-white even:bg-gray-100">
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 font-medium text-gray-900">{user.name}</div>
               </td>
@@ -120,25 +120,28 @@ export default function UserList() {
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500 flex space-x-3">
                 <button
-                  className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-blue-50"
+                  className="inline-flex items-center shadow-sm px-3 py-1.5 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-purple-500 hover:bg-purple-700"
                   title="View more"
                   onClick={() => handleEditClick(user)}
                 >
-                  <FaEye />
+                  <FaEye className="mr-1" />
+                  View
                 </button>
                 <button
-                  className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-blue-50"
+                  className="inline-flex items-center shadow-sm px-3 py-1.5 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-purple-300 hover:bg-purple-600"
                   title="Edit"
                   onClick={() => handleEditClick(user)}
                 >
-                  <FaEdit />
+                  <FaEdit className="mr-1" />
+                  Edit
                 </button>
                 <button
-                  className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-red-50"
+                  className="inline-flex items-center shadow-sm px-3 py-1.5 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-gray-300 hover:bg-gray-600"
                   title="Delete"
                   onClick={() => handleDeleteClick(user.id)}
                 >
-                  <FaTrash />
+                  <FaTrash className="mr-1" />
+                  Delete
                 </button>
               </td>
             </tr>
