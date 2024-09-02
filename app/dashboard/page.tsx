@@ -13,7 +13,7 @@ import Roles from "../Components/Admin/Roles";
 import FeedBack from "../Components/Admin/Feedback";
 import Engagement from "../Components/Admin/Engagement";
 import Profile from "../Components/Admin/Patient_Profile";
-import Appointments from "../Components/Admin/Appointment";
+import Appointments from "../Components/Therapist/Appointment";
 import Electronic from "../Components/Admin/Electronic";
 import Communication from "../Components/Admin/Communication";
 import System_Manage from "../Components/Admin/System_Manage";
@@ -22,7 +22,7 @@ import Data_Security from "../Components/Admin/Data_Security";
 import DataBackup from "../Components/Admin/Data_Backup";
 import Fincancial from "../Components/Admin/Financial";
 import Legal from "../Components/Admin/Legal";
-import Settings from "../Components/Admin/Settings";
+import Settings from "../Components/Therapist/Settings";
 import PatientsList from '../Components/PatientsList';
 import AdminPatientsList from '../Components/Admin/AdminPatientsList';
 import PatientMessages from '../Components/PatientMessages';
@@ -38,6 +38,11 @@ import SearchingPatient from '@/app/Components/SearchingPatient';
 import ClinicRecord from '../Components/Therapist/ClinicRecord';
 import PatientsSurvey from '../Components/Therapist/PatientsSurvey';
 import Emergency from '../Components/Therapist/Emergency';
+import EducationResource from '@/app/Components/Therapist/EducationResources';
+import Invoice from '@/app/Components/Therapist/Invoice';
+import Chat from '../Components/Therapist/Chat';
+import NotificationsPage from '../Components/Therapist/Notification';
+import SendNotificationPage from '../Components/Therapist/SendNotification';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -50,7 +55,11 @@ export default function DashboardPage() {
 
   const renderComponent = () => {
     switch (activeComponent) {
-      case 'emegency':
+      case 'sendNot':
+        return <SendNotificationPage />
+      case 'Notification':
+        return <NotificationsPage />
+      case 'Emegency':
         return < Emergency/>
       case 'patients feedback':
         return < PatientsSurvey/>
@@ -69,6 +78,8 @@ export default function DashboardPage() {
      
       case 'patientChat':
         return < PatientChart/>  
+        case 'Chat':
+        return < Chat/>  
       case 'appointments':
         return <AppointmentList />;
       case "videoCall":
@@ -79,6 +90,10 @@ export default function DashboardPage() {
         return <PatientMessages />;
       case 'reports':
         return <Reports />;
+        case 'invoice':
+          return < Invoice />;
+        case 'education':
+          return <EducationResource/>;
 
       case "therapists":
         return <AdminTherapistList setActiveComponent={setActiveComponent} />;
