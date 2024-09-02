@@ -20,7 +20,6 @@ import {
   FaClinicMedical,
   FaToolbox,
   FaReadme,
-  FaEdit,
   FaFileInvoice,
   FaEdit,
   FaResearchgate,
