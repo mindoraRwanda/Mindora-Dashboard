@@ -1,24 +1,36 @@
 import React, { useState, ChangeEvent } from "react";
 import { BiShow, BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete,MdPictureAsPdf,MdFileCopy } from "react-icons/md";
 import CreatePatient from "./AdminCreatePatient";
+import { FaFileExcel,FaFileWord } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { message, Modal } from "antd";
 import VideoCall from "../VideoCall";
+import { saveAs } from "file-saver";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import * as XLSX from 'xlsx';
 
 export default function AdminPatientsList() {
 
+  // this is initail data
   const initialPatients=[
     { id: 1, name: "John Doe", email: "john@example.com", gender:'Male', lastLogin: "2024-07-18" },
     { id: 2, name: "Jane Smith", email: "jane@example.com", gender:'female',lastLogin: "2024-07-17" },
     { id: 3, name: "Bob Johnson", email: "bob@example.com", gender:'Male',lastLogin: "2024-07-16" },
   ];
+
+// This is for state to change data
   const [searchQuery,setSearchQuery]=useState("");
   const [isModalVisible,setIsModalVisible]=useState(false);
   const [filteredPatient, setFilteredPatient]=useState(initialPatients);
   const [patient, setPatient] = useState(initialPatients);
   const [isEditable,setIsEditable]=useState(false);
   const [selectedPatient,setSelectedPatient]=useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4; 
+
 
 
   // Function to handle the "Edit" button click
@@ -38,7 +50,16 @@ export default function AdminPatientsList() {
               patient.email.toLocaleLowerCase().includes(query)
              );
     setFilteredPatient(filtered);
+    setCurrentPage(1);
 };
+
+// about paginating.
+const paginate = (pageNumber) => setCurrentPage(pageNumber);
+const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPatients = filteredPatient.slice(indexOfFirstItem, indexOfLastItem);
+
+// for view patient
 
   const handleView =(patient)=>{
     setSelectedPatient(patient);
@@ -59,6 +80,43 @@ export default function AdminPatientsList() {
       message.success('Patient Deleted');
     };
 
+  };
+
+  const handleExportWord = () => {
+    const doc = new Document({
+      sections: [
+        {
+          children: currentPatients.map(
+            (patient) =>
+              new Paragraph({
+                children: [
+                  new TextRun(`Name: ${patient.name}`),
+                  new TextRun({
+                    text: `\nSpecialty: ${patient.email}`,
+                    break: 1,
+                  }),
+                  new TextRun({
+                    text: `\nPatients: ${patient.gender}`,
+                    break: 1,
+                  }),
+                  new TextRun({
+                    text: `\nPatients: ${patient.lastLogin}`,
+                    break: 1,
+                  }),
+                  new TextRun({
+                    text: `\n`,
+                    break: 1,
+                  }),
+                ],
+              })
+          ),
+        },
+      ],
+    });
+
+    Packer.toBlob(doc).then((blob) => {
+      saveAs(blob, "Patient_list.docx");
+    });
   };
 
   const handleUpdate=(updatedPatient)=>{
@@ -86,9 +144,32 @@ export default function AdminPatientsList() {
     setIsModalVisible(true);
   };
  
+const handleExportPDF=()=>{
 
+  const input = document.getElementById('Patient-table'); 
+  html2canvas(input, { scale: 2 }).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, 'PNG', 10, 10, canvas.width /12 , canvas.height /12 );
+    pdf.save("Patients_list.pdf");
+  });
+}
+const handleExportExcel=()=>{
+  const worksheet = XLSX.utils.json_to_sheet(filteredPatient);
+  const workbook = XLSX.utils.book_new(); 
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Patients"); 
+  XLSX.writeFile(workbook, "Patients_list.xlsx");
 
+}
+const handleCopy=()=>{
+  const text = filteredPatient.map(patient => 
+    `Name: ${patient.name}, Email: ${patient.email}, Gender: ${patient.gender},Last visit:${patient.lastLogin}`
+  ).join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    message.success("Data copied to clipboard!");
+  });
 
+}
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
       <div className="flex justify-between mb-4">
@@ -110,16 +191,24 @@ export default function AdminPatientsList() {
           </button>
         </div>
         </div>
-        <div className="flex float-right border-2 border-slate-300 rounded-md  mt-4">
-        <a
-          onClick={showModal}
-          className=" bg-purple-600 font-bold p-2 px-2 cursor-pointer text-white rounded-md "
-        >
-          {" "}
-          + Add New
-        </a>
+        <div className="flex gap-4 mb-8">
+      <div className="flex float-left border-2 border-slate-300 rounded-md mt-4">
+      <a onClick={showModal} className="text-white font-bold p-2 px-2  cursor-pointer bg-purple-600 rounded-md "> + Add New</a>
       </div>
-      <table className="min-w-full">
+        <div className="flex ml-auto gap-3 rounded-md mt-4 ">
+        <button className="text-white font-bold border-2 border-slate-300 p-2  cursor-pointer bg-purple-600 rounded-md flex" onClick={handleExportPDF}><MdPictureAsPdf size={20}/>Pdf</button>
+        <button className="text-white font-bold border-2 border-slate-300 p-2  cursor-pointer bg-purple-600 rounded-md flex" onClick={handleExportExcel}><FaFileExcel size={20}/>excel</button>
+        <button
+            className="text-white font-bold border-2 border-slate-300 p-2 px-2 cursor-pointer bg-purple-600 rounded-md flex"
+            onClick={handleExportWord}
+          >
+            <FaFileWord size={20} />
+            Word
+          </button>
+        <button className="text-white font-bold border-2 border-slate-300 p-2  cursor-pointer bg-purple-600 rounded-md flex" onClick={handleCopy}><MdFileCopy size={20}/>copy</button>
+        </div>
+        </div>
+      <table id="Patient-table" className="min-w-full">
         <thead>
           <tr>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -141,7 +230,7 @@ export default function AdminPatientsList() {
           </tr>
         </thead>
         <tbody>
-          {filteredPatient.map((patient) => (
+          {currentPatients.map((patient) => (
             <tr key={patient.id}>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 font-medium text-gray-900">{patient.name}</div>
@@ -185,6 +274,18 @@ export default function AdminPatientsList() {
           ))}
         </tbody>
       </table>
+          {/* Pagination Controls */}
+          <div className="flex justify-end mt-4">
+        {Array.from({ length: Math.ceil(filteredPatient.length / itemsPerPage) }, (_, i) => i + 1).map((pageNumber) => (
+          <button
+            key={pageNumber}
+            onClick={() => paginate(pageNumber)}
+            className={`px-3 py-1 border ${pageNumber === currentPage ? 'bg-purple-600 text-white' : 'bg-white text-purple-600'} mx-1 rounded`}
+          >
+            {pageNumber}
+          </button>
+        ))}
+      </div>
 <Modal visible={isModalVisible}  footer={null} onCancel={handleCancel}>
     
 {selectedPatient ? (

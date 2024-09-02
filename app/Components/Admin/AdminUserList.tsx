@@ -1,108 +1,206 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { BiShow, BiEditAlt } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdPictureAsPdf, MdFileCopy } from "react-icons/md";
+import { FaFileExcel,FaFileWord } from "react-icons/fa";
 import { message, Modal } from "antd";
 import Create_User from "./Create_User";
 import VideoCall from "../VideoCall";
+import { saveAs } from "file-saver";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 
 export default function AdminUserList({ setActiveComp }) {
+  // Initial  static data 
   const initialsUser = [
     {
       id: 1,
       name: "John Doe",
+      gender:"male",
       email: "john@example.com",
       lastLogin: "2024-07-18",
     },
     {
       id: 2,
       name: "Jane Smith",
+      gender:"female",
       email: "jane@example.com",
       lastLogin: "2024-07-17",
     },
     {
       id: 3,
       name: "Bob Johnson",
+      gender:"male",
       email: "bob@example.com",
       lastLogin: "2024-07-16",
     },
   ];
 
+// State that will be used for updating data
+
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState(initialsUser);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [users,setUsers]=useState(initialsUser);
-  const [isEditable,setIsEditable]=useState(false);
+  const [users, setUsers] = useState(initialsUser);
+  const [isEditable, setIsEditable] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4; 
 
+// Function that will be used for searching element
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
-
     const filtered = users.filter(
       (user) =>
         user.name.toLowerCase().includes(query) ||
         user.email.toLowerCase().includes(query)
     );
     setFilteredUsers(filtered);
+    setCurrentPage(1); // Reset to the first page after a new search
   };
+
+  // Handle page change
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Get the current users for the page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+
+
+  // function that will be used for Downloading document as word.
+  const handleExportWord = () => {
+    const doc = new Document({
+      sections: [
+        {
+          children: currentUsers.map( (user) => new Paragraph({ children: [
+                  new TextRun(`Name: ${user.name}`),
+                  new TextRun({ text: `\nEmail: ${user.email}`,
+                  break: 1,
+                  }),
+
+                  new TextRun({
+                    text: `\nGender: ${user.gender}`,
+                    break: 1,
+                  }),
+                  new TextRun({
+                    text: `\nLast visit: ${user.lastLogin}`,
+                    break: 1,
+                  }),
+                  new TextRun({
+                    text: `\n`,
+                    break: 1,
+                  }),
+                ],
+              })
+          ),
+        },
+      ],
+    });
+     
+    Packer.toBlob(doc).then((blob) => {
+      saveAs(blob, "User_list.docx");
+    });
+  };
+
+  // function that will be used for Viewing the users
   const handleView = (user) => {
     setSelectedUser(user);
     setIsEditable(false);
     setIsModalVisible(true);
   };
 
+  // funxtion that will be used for displaying the Modal.
   const showModal = () => {
     setSelectedUser(null);
     setIsEditable(true);
     setIsModalVisible(true);
   };
 
-  const handleEdit=(user)=>{
-    setSelectedUser(user);
-    setIsEditable(true);
-    setIsModalVisible(true);
-  };
-  const handleDelete=(userId)=>{
-    const confirmed=window.confirm('Are you sure you want to delete User?');
-
-    if(confirmed){
-    const updateUsers = users.filter((user)=>user.id !== userId);
-    setUsers(updateUsers);
-    setFilteredUsers(updateUsers);
-    message.success("User Deleted SuccessFully");
-    };
-  };
-
-  const handleUpdate=(updateUser)=>{
-    const updateUsers=users.map((user)=>
-    user.id === updateUser.id ? updateUser:user);
-
-    setUsers(updateUsers);
-    setFilteredUsers(updateUsers);
-    setIsModalVisible(false);
-    message.success("updated user Successfully");
-  };
-
+  // function for canceling the Modal displayed.
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  const handleBlock=()=>{
+// Function that will be used for Edit User.
+
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setIsEditable(true);
+    setIsModalVisible(true);
+  };
+
+  // Function that will be used for Deleting the User
+  const handleDelete = (userId) => {
+    const confirmed = window.confirm('Are you sure you want to delete User?');
+    if (confirmed) {
+      const updateUsers = users.filter((user) => user.id !== userId);
+      setUsers(updateUsers);
+      setFilteredUsers(updateUsers);
+      message.success("User Deleted Successfully");
+    }
+  };
+
+// Function that will be used for handling updates
+
+  const handleUpdate = (updateUser) => {
+    const updateUsers = users.map((user) =>
+      user.id === updateUser.id ? updateUser : user);
+    setUsers(updateUsers);
+    setFilteredUsers(updateUsers);
+    setIsModalVisible(false);
+    message.success("Updated user successfully");
+  };
+
+// function that will be called when User is Going to be setted as Active or not.
+  const handleBlock = () => {
     message.info('You will block User');
   };
 
-  const addUser=(newUser)=>{
-    newUser.id=users.length+1;
-    setUsers([...users,newUser]);
-    setFilteredUsers([...users,newUser]);
+  // function that will be used to Add the new User in the system
+  const addUser = (newUser) => {
+    newUser.id = users.length + 1;
+    setUsers([...users, newUser]);
+    setFilteredUsers([...users, newUser]);
     setIsModalVisible(false);
-    message.success("New User Added Successfully"); 
+    message.success("New User Added Successfully");
+  };
 
-  }
-  
+// The function that will be used for Downloading File As PDF.
+  const handleExportPDF = () => {
+    const input = document.getElementById('User-table');
+    html2canvas(input, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 10, 10, canvas.width / 12, canvas.height / 12);
+      pdf.save("User_list.pdf");
+    });
+
+  };
+
+// This function will be used for Downloading file As Exel
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredUsers);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+    XLSX.writeFile(workbook, "Users_list.xlsx");
+  };
+
+// This Function will be Used for Copy file.
+  const handleCopy = () => {
+    const text = filteredUsers.map(user =>
+      `Name: ${user.name}, Email: ${user.email}, Last Login: ${user.lastLogin}`
+    ).join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      message.success("Data copied to clipboard!");
+    });
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6">
+    <div className="bg-white rounded-lg shadow-xl p-3">
       <div className="flex justify-between mb-4">
         <h2 className="text-2xl font-semibold mb-4 text-purple-600">Users</h2>
         <div className="items-center border rounded bg-white flex float-right">
@@ -122,16 +220,26 @@ export default function AdminUserList({ setActiveComp }) {
           </button>
         </div>
       </div>
-      <div className="flex float-right border-2 border-slate-300 rounded-md  mt-4">
-        <a
-          onClick={showModal}
-          className=" bg-purple-600 font-bold p-2 px-2 cursor-pointer text-white rounded-md "
-        >
-          {" "}
-          + Add New
-        </a>
+      <div className="flex gap-4 mb-8">
+        <div className="flex float-left border-2 border-slate-300 rounded-md mt-4">
+          <a onClick={showModal} className="text-white font-bold p-2 px-2 cursor-pointer bg-purple-600 rounded-md "> + Add New</a>
+        </div>
+        <div className="flex ml-auto gap-3 rounded-md mt-4 ">
+          <button className="text-white font-bold border-2 border-slate-300 p-2 cursor-pointer bg-purple-600 rounded-md flex" onClick={handleExportPDF}><MdPictureAsPdf size={20} />Pdf</button>
+          <button className="text-white font-bold border-2 border-slate-300 p-2 cursor-pointer bg-purple-600 rounded-md flex" onClick={handleExportExcel}><FaFileExcel size={20} />excel</button>
+          <button
+            className="text-white font-bold border-2 border-slate-300 p-2 px-2 cursor-pointer bg-purple-600 rounded-md flex"
+            onClick={handleExportWord}
+          >
+            <FaFileWord size={20} />
+            Word
+          </button>
+          <button className="text-white font-bold border-2 border-slate-300 p-2 cursor-pointer bg-purple-600 rounded-md flex" onClick={handleCopy}><MdFileCopy size={20} />copy</button>
+        </div>
       </div>
-      <table className="min-w-full">
+      
+      {/* table that will be displayed */}
+      <table id="User-table" className="min-w-full">
         <thead>
           <tr>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -141,9 +249,12 @@ export default function AdminUserList({ setActiveComp }) {
               Email
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+              Gender
+            </th>
+            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Last Login
             </th>
-         
+
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
@@ -153,7 +264,7 @@ export default function AdminUserList({ setActiveComp }) {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
+          {currentUsers.map((user) => ( // Use currentUsers for pagination
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 font-medium text-gray-900">
@@ -167,85 +278,103 @@ export default function AdminUserList({ setActiveComp }) {
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 text-gray-900">
+                  {user.gender}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                <div className="text-sm leading-5 text-gray-900">
                   {user.lastLogin}
                 </div>
               </td>
-              <td className=" py-5 whitespace-no-wrap border-b border-gray-500">
+              <td className="py-5 whitespace-no-wrap border-b border-gray-500">
                 <div className="text-sm leading-5 text-gray-900 ml-5">
-                <button className="border-2 border-gray-300 p-2 px-6 rounded-md font-semibold" onClick={handleBlock}>Active</button>
+                  <button className="border-2 border-gray-300 p-2 px-6 rounded-md font-semibold" onClick={handleBlock}>Active</button>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <div className="flex text-sm leading-5 text-gray-900">
                   <button
-                    className="flex mr-2 bg-transparent rounded border-2 border-slate-300 font-semibold  p-1 text-black"
+                    className="flex mr-2 bg-transparent rounded border-2 border-slate-300 font-semibold p-1 text-black"
                     onClick={() => handleView(user)}
                   >
                     <BiShow size={25} />
-                    
+
                   </button>
                   <button
                     className="flex mr-2 text-blue-700 border-2 border-slate-300 p-1 rounded font-semibold"
                     onClick={() => handleEdit(user)}
                   >
                     <BiEditAlt size={25} />
-                    
+
                   </button>
                   <button
-                    className="flex mr-2 text-red-500 rounded  p-1 border-2 border-slate-300  font-semibold"
+                    className="flex mr-2 text-red-500 rounded p-1 border-2 border-slate-300 font-semibold"
                     onClick={() => handleDelete(user.id)}
                   >
                     <MdDelete size={25} />
-                    
+
                   </button>
                 </div>
               </td>
-            
+
             </tr>
           ))}
         </tbody>
       </table>
 
+      {/* Pagination Controls */}
+      <div className="flex justify-end mt-4">
+        {Array.from({ length: Math.ceil(filteredUsers.length / itemsPerPage) }, (_, i) => i + 1).map((pageNumber) => (
+          <button
+            key={pageNumber}
+            onClick={() => paginate(pageNumber)}
+            className={`px-3 py-1 border ${pageNumber === currentPage ? 'bg-purple-600 text-white' : 'bg-white text-purple-600'} mx-1 rounded`}
+          >
+            {pageNumber}
+          </button>
+        ))}
+      </div>
+
       <Modal visible={isModalVisible} onCancel={handleCancel} footer={null}>
-        
+
         {selectedUser ? (
           <div>
             <h2 className="text-xl font-semibold mb-4">
               {
-                isEditable ? " Edit User " :" User Details "
+                isEditable ? " Edit User " : " User Details "
               }
             </h2>
             <p className="text-black m-3">
               <span>Name:</span><br />
-              <input type="text"  className="p-1 mt-2 rounded-md border-2 border-gray-300"
-               value={selectedUser.name}
-               readOnly={!isEditable}
-               onChange={(e)=>setSelectedUser({...selectedUser, name:e.target.value})}/>
+              <input type="text" className="p-1 mt-2 rounded-md border-2 border-gray-300"
+                value={selectedUser.name}
+                readOnly={!isEditable}
+                onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })} />
             </p>
             <p className="text-black m-3">
               <span>Email:</span><br />
 
-              <input type="email"  className="p-1 mt-2 rounded-md border-2 border-gray-300"
-              value={selectedUser.email}
-              readOnly={!isEditable}
-              onChange={(e)=>setSelectedUser({...selectedUser,email:e.target.value})}/>
-            </p>
-            
-            <p className="text-black m-3 flex">
-              <span>Last Login:</span>
-             <p className="text-md font-semibold ml-2">
-               {selectedUser.lastLogin}
-          </p>
+              <input type="email" className="p-1 mt-2 rounded-md border-2 border-gray-300"
+                value={selectedUser.email}
+                readOnly={!isEditable}
+                onChange={(e) => setSelectedUser({ ...selectedUser, email: e.target.value })} />
             </p>
 
-            {isEditable &&(
-              <button onClick={()=>handleUpdate(selectedUser)} className="text-center border-2 p-2 ml-3 rounded-md bg-red-600 text-white font-semibold">Update
+            <p className="text-black m-3 flex">
+              <span>Last Login:</span>
+              <p className="text-md font-semibold ml-2">
+                {selectedUser.lastLogin}
+              </p>
+            </p>
+
+            {isEditable && (
+              <button onClick={() => handleUpdate(selectedUser)} className="text-center border-2 p-2 ml-3 rounded-md bg-red-600 text-white font-semibold">Update
               </button>
             )}
-            <VideoCall/>
+            <VideoCall />
           </div>
         ) : (
-          <Create_User addUser={addUser}/>
+          <Create_User addUser={addUser} />
         )}
       </Modal>
     </div>

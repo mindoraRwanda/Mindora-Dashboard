@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Sidebar from "../Components/Sidebar";
-import TopBar from "../Components/TopBar";
-import Home from "../Components/Home";
-import AppointmentList from "../Components/AppointmentList";
-import VideoCall from "../Components/VideoCall";
+import Sidebar from '../Components/Sidebar';
+import TopBar from '../Components/TopBar';
+import Home from '../Components/Admin/AdminHome';
+import AppointmentList from '../Components/AppointmentList';
+import VideoCall from '../Components/VideoCall';
 import Reports from '../Components/Reports';
 import AdminTherapistList from "../Components/Admin/AdminTherapistList";
 import AdminUserList from "../Components/Admin/AdminUserList";
@@ -43,6 +43,7 @@ import Invoice from '@/app/Components/Therapist/Invoice';
 import Chat from '../Components/Therapist/Chat';
 import NotificationsPage from '../Components/Therapist/Notification';
 import SendNotificationPage from '../Components/Therapist/SendNotification';
+import ContentManage from '../Components/Admin/ContentManage';
 
 const UserRole = {
   THERAPIST: "therapist",
@@ -88,6 +89,7 @@ export default function DashboardPage() {
         return <PatientsList />;
       case 'Messages':
         return <PatientMessages />;
+        
       case 'reports':
         return <Reports />;
         case 'invoice':
@@ -120,6 +122,8 @@ export default function DashboardPage() {
         return <System_Manage/>
       case 'system updates':
         return <Systen_Updates/>
+        case 'Content Management':
+          return <ContentManage/>
       case 'data security':
         return <Data_Security/>
         case 'data backup':

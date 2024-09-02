@@ -6,18 +6,21 @@ export default function UserList() {
     {
       id: 1,
       name: "John Doe",
+      gender:'male',
       email: "john@example.com",
       lastLogin: "2024-07-18",
     },
     {
       id: 2,
       name: "Jane Smith",
+      gender:'Female',
       email: "jane@example.com",
       lastLogin: "2024-07-17",
     },
     {
       id: 3,
       name: "Bob Johnson",
+      gender:'male',
       email: "bob@example.com",
       lastLogin: "2024-07-16",
     },
