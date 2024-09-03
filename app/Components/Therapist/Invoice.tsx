@@ -1,6 +1,9 @@
-import { useState } from 'react';
-import html2pdf from 'html2pdf.js';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+//import html2pdf from 'html2pdf.js';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+
+const html2pdf = dynamic(() => import('html2pdf.js'), { ssr: false });
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
