@@ -39,9 +39,7 @@ export default function TopBar({ userRole, items = [], onSearch }) {
     name: "John Doe",
     profilePhoto: "/images/profile.jpeg" // Make sure this path is correct
   };
-  const handleCancel = () => {
-    setCalendarModal(false);
-  };
+ 
   const handleLanguageChange = (e) => {
     const selectedLanguage = e.target.value;
     i18n.changeLanguage(selectedLanguage).then(() => {
