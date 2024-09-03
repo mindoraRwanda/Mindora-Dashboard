@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reducer from "./slice";
+import CounterReducer  from "./slice";
 
 
 const store=configureStore({
     reducer:{
-slice:reducer,
+     MindoraSlice:CounterReducer,
     },
 });
 export default store;

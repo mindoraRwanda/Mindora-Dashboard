@@ -1,23 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
-const slice=createSlice({
-    name:'slice',
-    initialState:{
-        data:[],
-        status:'idle',
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-    },
+const initialState:{token?: string }={token:undefined};
+
+ export const CounterReducer=createSlice({
+    name:'mindora',
+    initialState,
     reducers:{
-        setData:(state,action)=>{
-            state.data=action.payload;
+        setToken:(state,action:PayloadAction<string|undefined>)=>{
+            const {payload}=action;
+            state.token=payload;
 
         },
-        setStatus:(state,action)=>{
-            state.status=action.payload;
+        setToken:(state,action)=>{
+            state.token=undefined;
         },
 
     },
 
 });
 
-export const {setData,setStatus}=slice.actions;
+export const {setToken,setToken}=slice.actions;
 export default slice.reducer;
