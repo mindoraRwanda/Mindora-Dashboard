@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Modal } from "antd";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -30,9 +31,6 @@ export default function TopBar({ userRole, items = [], onSearch }) {
     setCalendarModal(true);
   };
 
-  const handleCancel = () => {
-    setCalendarModal(false);
-  };
 
   // Example user object for demonstration purposes
   const user = {
