@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation'; // Update the import
 import Login from './Components/Login';
 import DashboardPage from './dashboard/page';
 
 export default function Page() {
   const { user } = useSelector((state) => state.auth);
-  const router = useRouter();
+  const router = useRouter(); // This now uses `next/navigation` router
 
   useEffect(() => {
     if (user) {

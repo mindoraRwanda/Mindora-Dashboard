@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { login } from '../redux/authSlice';
 import Image from 'next/image';
 
@@ -53,7 +53,7 @@ const Login = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
@@ -70,7 +70,7 @@ const Login = () => {
                 <input
                   type="password"
                   id="password"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3  text-black py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
@@ -93,7 +93,7 @@ const Login = () => {
             </div>
             <div className="mt-8 border-t pt-6">
               <p className="text-sm text-gray-500 text-center">
-                Don't have an account?{' '}
+                Dont have an account?{' '}
                 <a href="#" className="text-blue-500 hover:underline">Sign up</a>
               </p>
             </div>
