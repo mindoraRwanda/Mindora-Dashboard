@@ -12,6 +12,7 @@ export default function Messages() {
   ];
 
   const renderReportDetails = (messages) => {
+
     switch (messages.type) {
       case 'progress':
         return (
@@ -56,7 +57,7 @@ export default function Messages() {
 
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
-      <h2 className="text-2xl font-semibold mb-4">Reports</h2>
+     <p className='text-2xl text-purple-600 my-4 font-semibold'> Messages</p>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <ul className="divide-y divide-gray-200">
@@ -75,7 +76,7 @@ export default function Messages() {
                   <div>
                     <button
                       onClick={() => setSelectedReport(messages)}
-                      className="inline-flex items-center shadow-sm px-2.5 py-0.5 border text-black border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
+                      className="inline-flex items-center shadow-sm px-2.5 py-0.5 border  border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
                     >
                       Read
                     </button>

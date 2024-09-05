@@ -7,8 +7,10 @@ import {
   FaVideo,
   FaChartBar,
   FaUserMd,
+  FaBars,
   FaUsers,
   FaHome,
+  FaTimes,
   FaCog,
   FaCriticalRole,
   FaRegUser,
@@ -17,13 +19,9 @@ import {
   FaMoneyBillWave,
   FaCalendarCheck,
   FaFileMedicalAlt,
-  FaClinicMedical,
-  FaToolbox,
+  FaClinicMedical,FaToolbox,
   FaReadme,
-  FaFileInvoice,
-  FaEdit,
-  FaResearchgate,
-  FaTemperatureHigh,
+  FaEdit,FaFileInvoice,FaResearchgate,FaTemperatureHigh,
 } from "react-icons/fa";
 import { FaBarsProgress, FaHouseMedicalCircleCheck, FaKitMedical, FaNotesMedical, FaRecordVinyl, FaRegFaceSurprise } from "react-icons/fa6";
 import { Chart, DoughnutController, ArcElement, Legend, Tooltip } from 'chart.js';
@@ -38,14 +36,26 @@ import { SiArkecosystem, SiFiles, SiDatabricks } from "react-icons/si";
 
 export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [SidebarOpen,setSidebarOpen]=useState(false);
 
   const toggleDropdown = (dropdown) => {
-    
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
+  const toggerOpenBar=()=>{
+    setSidebarOpen(!SidebarOpen);
+  }
+
   return (
-    <div className="fixed inset-y-0 left-0 transform translate-x-0 w-64 bg-white bg-opacity-90 overflow-y-auto transition duration-200 ease-in-out z-10 md:relative md:translate-x-0">
+    <>
+  <button className="md:hidden p-4" onClick={toggerOpenBar}>
+        {SidebarOpen ? (
+          <FaTimes className="text-3xl text-red-700" />
+        ) : (
+          <FaBars className="text-2xl text-gray-700" /> 
+        )}
+      </button>
+    <div className={`fixed inset-y-0 left-0 transform ${SidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 w-64 bg-white bg-opacity-90 overflow-y-auto transition duration-200 ease-in-out z-10 md:relative`}>
       <div className="p-6">
         <h2 className="text-3xl font-bold text-purple-600">Dashboard</h2>
         <button
@@ -232,36 +242,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
             <a onClick={() => setActiveComponent('therapists')} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <FaUserMd className="mr-3" /> View Therapists
             </a>
-            {/* <div className="relative">
-              <a
-                onClick={() => toggleDropdown("TherapistManagement")}
-                className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-              >
-                <FaUsers className="mr-3" /> Therapist Management <GoChevronDown className="ml-1" />
-              </a>
-              {openDropdown === "TherapistManagement" && (
-                <div className="ml-6">
-                  <a
-                    onClick={() => setActiveComponent("Create and Update")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1" />Create and Update</p>
-                  </a>
-                  <a
-                    onClick={() => setActiveComponent("Schedules")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Schedules</p>
-                  </a>
-                  <a
-                    onClick={() => setActiveComponent("Availability")}
-                    className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-                  >
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Availability</p>
-                  </a>
-                </div>
-              )} */}
-            {/* </div> */}
+       
            
             <div className="relative">
               <a onClick={() => toggleDropdown("userManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
@@ -273,27 +254,8 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
                     <p className="flex"><LuDot className="m-1" /> User details</p>
                   </a>
                  
-                  <a onClick={() => setActiveComponent("feedback")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1 text-sm" /> User Feedback</p>
-                  </a>
                   <a onClick={() => setActiveComponent("engagement")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                     <p className="flex"><LuDot className="m-1 text-sm" /> User Engagement</p>
-                  </a>
-                </div>
-              )}
-            </div>
-            <div className="relative">
-              <a onClick={() => toggleDropdown("systemManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                <SiArkecosystem className="mr-3" /> System Management <GoChevronDown className="ml-1" />
-              </a>
-              {openDropdown === "systemManagement" && (
-                <div className="ml-6">
-                 <a onClick={() => setActiveComponent("roles")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1 text-sm" /> Role and Permissions</p>
-                  </a>
-                 
-                  <a onClick={() => setActiveComponent("system updates")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-                    <p className="flex"><LuDot className="m-1 text-sm" /> System Updates and Maintenance</p>
                   </a>
                 </div>
               )}
@@ -316,25 +278,32 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
                 </div>
               )}
             </div>
+            <div className="relative">
+              <a onClick={() => toggleDropdown("systemManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                <SiArkecosystem className="mr-3" /> System Management <GoChevronDown className="ml-1" />
+              </a>
+              {openDropdown === "systemManagement" && (
+                <div className="ml-6">
+                 <a onClick={() => setActiveComponent("roles")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Role and Permissions</p>
+                  </a>
+                 
+             
+                  <a onClick={() => setActiveComponent("Content Management")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+                    <p className="flex"><LuDot className="m-1 text-sm" /> Content Management</p>
+                  </a>
+                </div>
+              )}
+            </div>
+            
+           
+         
+            <a onClick={() => setActiveComponent("communication")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+              <PiCallBellBold className="mr-3 text-xl" /> Community Management
+            </a>
             <a onClick={() => setActiveComponent("electronic health records")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <SiFiles className="mr-3" /> Electronic Health Records
               </a>
-            <a
-              onClick={() => setActiveComponent("SystemLogs")}
-              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-            >
-              <SiFiles className="mr-3" /> System Logs
-            </a>
-            <a
-              onClick={() => setActiveComponent("Analytics")}
-              className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer"
-            >
-              <SiDatabricks className="mr-3" /> Analytics
-            </a>
-            <a onClick={() => setActiveComponent("communication")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
-              <PiCallBellBold className="mr-3 text-xl" /> Communication Management
-            </a>
-           
             <div className="relative">
               <a onClick={() => toggleDropdown("dataManagement")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
                 <SiDatabricks className="mr-3" /> Data Management <GoChevronDown className="ml-1" />
@@ -359,7 +328,7 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
             <a onClick={() => setActiveComponent("legal and compliance")} className="block px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <p className="flex"><MdOutlineDocumentScanner className="m-1 text-xl" /> Legal and Compliance</p>
             </a>
-            <a onClick={() => setActiveComponent("settings")} className="flex items-center px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
+            <a onClick={() => setActiveComponent("settings")} className="flex items-center text-2xl px-6 py-3 text-gray-700 hover:bg-purple-100 transition duration-200 cursor-pointer">
               <FaCog className="mr-3" /> Settings
             </a>
            
@@ -367,5 +336,6 @@ export default function Sidebar({ userRole, setActiveComponent, setUserRole }) {
         )}
       </nav>
     </div>
+    </>
   );
 }
