@@ -143,7 +143,7 @@ export default function DashboardPage({ userRole }) {
       <Sidebar 
         userRole={userRole} 
         setActiveComponent={setActiveComponent} 
-        setUserRole={setUserRole}
+        // setUserRole={setUserRole}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar userRole={userRole} />
